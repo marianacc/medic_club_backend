@@ -12,17 +12,5 @@ public class AppUserController {
     @Autowired
     AppUserService appUserService;
 
-    @RequestMapping(
-            value = "sign-up",
-            method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void signUp(@RequestBody AppUser appUser){
-        ObjectResponse objectResponse = new ObjectResponse();
-        try{
-            appUserService.save(appUser);
-        }catch(Exception e){
-            objectResponse.setSuccess(false);
-            objectResponse.setStatusMessage(e.getMessage());
-        }
-    }
+
 }
