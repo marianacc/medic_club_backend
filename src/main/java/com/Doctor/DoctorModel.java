@@ -1,18 +1,9 @@
-package com.AppUser;
+package com.Doctor;
 
-import com.Doctor.Doctor;
-import com.Patient.Patient;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
 import java.sql.Date;
 
-@Entity
-public class AppUser {
+public class DoctorModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     private String email;
     private String password;
     private String first_name;
@@ -21,27 +12,15 @@ public class AppUser {
     private Date birth_date;
     private String photo_url;
 
-    public AppUser() {
+    private String bio, pricing;
+    private int id_specialty;
+
+    public int getId_specialty() {
+        return id_specialty;
     }
 
-    public AppUser(Integer id) {
-        this.id = id;
-    }
-
-    @OneToOne(mappedBy = "appUser")
-    @JsonIgnore
-    private Patient patient;
-
-    @OneToOne(mappedBy = "appUser")
-    @JsonIgnore
-    private Doctor doctor;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId_specialty(int id_specialty) {
+        this.id_specialty = id_specialty;
     }
 
     public String getEmail() {
@@ -100,19 +79,19 @@ public class AppUser {
         this.photo_url = photo_url;
     }
 
-    public Patient getPatient() {
-        return patient;
+    public String getBio() {
+        return bio;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public String getPricing() {
+        return pricing;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setPricing(String pricing) {
+        this.pricing = pricing;
     }
 }

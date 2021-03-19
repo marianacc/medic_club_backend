@@ -6,4 +6,6 @@ public class SecurityConstants {
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
     public static final String PATIENT_CREATION = "/patient/sign-up";
+    public static final String DOCTOR_CREATION = "/doctor/sign-up";
+
 }

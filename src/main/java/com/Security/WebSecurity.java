@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+import static com.Security.SecurityConstants.DOCTOR_CREATION;
 import static com.Security.SecurityConstants.PATIENT_CREATION;
 
 @EnableWebSecurity
@@ -31,6 +32,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, PATIENT_CREATION).permitAll()
+                .antMatchers(HttpMethod.POST, DOCTOR_CREATION).permitAll()
+
                 .antMatchers("*","/gs-guide-websocket").permitAll()
                 .anyRequest().authenticated()
                 .and()
