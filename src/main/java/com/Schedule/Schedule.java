@@ -1,6 +1,7 @@
 package com.Schedule;
 
 import com.ConsultingRoom.ConsultingRoom;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
@@ -10,8 +11,9 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "consulting_room_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name="consulting_room_id", nullable=true)
+    @JsonBackReference(value = "consulting_room_id")
     private ConsultingRoom consultingRoom;
 
     private String day, initial_hour, final_hour;

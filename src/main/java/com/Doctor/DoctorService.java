@@ -41,11 +41,12 @@ public class DoctorService {
         appUser.setLast_name(doctorModel.getLast_name());
         Doctor doctor = new Doctor();
         doctor.setSpecialty(specialtyDao.findById(doctorModel.getId_specialty()));
+        doctor.setScore(doctorModel.getScore());
         doctor.setAppUser(appUser);
         doctorDao.save(doctor);
     }
 
     public ArrayList<Doctor> listMostRated() {
-        return (ArrayList<Doctor>) doctorDao.findTop10ByOrderByScoreAsc();
+        return (ArrayList<Doctor>) doctorDao.findTop10ByOrderByScoreDesc();
     }
 }

@@ -3,6 +3,7 @@ package com.Doctor;
 import com.AppUser.AppUser;
 import com.ConsultingRoom.ConsultingRoom;
 import com.Specialty.Specialty;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
@@ -16,13 +17,13 @@ public class Doctor {
     @JoinColumn(name = "app_user_id", referencedColumnName = "id")
     private AppUser appUser;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "specialty_id", referencedColumnName = "id")
-    private Specialty specialty;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "consulting_room_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name="consulting_room_id", nullable=true)
     private ConsultingRoom consultingRoom;
+
+    @ManyToOne
+    @JoinColumn(name="specialty_id", nullable=false)
+    private Specialty specialty;
 
     private String bio;
     private Double pricing;
@@ -34,6 +35,14 @@ public class Doctor {
 
     public Double getScore() {
         return score;
+    }
+
+    public ConsultingRoom getConsultingRoom() {
+        return consultingRoom;
+    }
+
+    public void setConsultingRoom(ConsultingRoom consultingRoom) {
+        this.consultingRoom = consultingRoom;
     }
 
     public void setScore(Double score) {
@@ -58,14 +67,6 @@ public class Doctor {
 
     public void setSpecialty(Specialty specialty) {
         this.specialty = specialty;
-    }
-
-    public ConsultingRoom getConsultingRoom() {
-        return consultingRoom;
-    }
-
-    public void setConsultingRoom(ConsultingRoom consultingRoom) {
-        this.consultingRoom = consultingRoom;
     }
 
     public String getBio() {

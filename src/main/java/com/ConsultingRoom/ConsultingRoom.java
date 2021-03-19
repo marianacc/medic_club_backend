@@ -2,9 +2,9 @@ package com.ConsultingRoom;
 
 import com.Doctor.Doctor;
 import com.Schedule.Schedule;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class ConsultingRoom {
@@ -14,14 +14,11 @@ public class ConsultingRoom {
 
     String latitude, longitude, time_interval, phone_number;
 
-    @OneToOne(mappedBy = "consultingRoom")
-    @JsonIgnore
-    private Doctor doctor;
+    @OneToMany(mappedBy="consultingRoom")
+    private Set<Doctor> doctors;
 
-    @OneToOne(mappedBy = "consultingRoom")
-    @JsonIgnore
-    private Schedule schedule;
-
+    @OneToMany(mappedBy="consultingRoom")
+    private Set<Schedule> schedules;
 
     public Integer getId() {
         return id;
@@ -33,6 +30,14 @@ public class ConsultingRoom {
 
     public String getLatitude() {
         return latitude;
+    }
+
+    public Set<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<Schedule> schedules) {
+        this.schedules = schedules;
     }
 
     public void setLatitude(String latitude) {
@@ -63,19 +68,12 @@ public class ConsultingRoom {
         this.phone_number = phone_number;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public Set<Doctor> getDoctors() {
+        return doctors;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setDoctors(Set<Doctor> doctors) {
+        this.doctors = doctors;
     }
 
-    public Schedule getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
-    }
 }

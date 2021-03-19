@@ -15,6 +15,16 @@ public class DoctorModel {
     private String bio, pricing;
     private int id_specialty;
 
+    private Double Score;
+
+    public Double getScore() {
+        return Score;
+    }
+
+    public void setScore(Double score) {
+        Score = score;
+    }
+
     public int getId_specialty() {
         return id_specialty;
     }

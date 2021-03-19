@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 public class Specialty {
@@ -15,9 +16,9 @@ public class Specialty {
 
     String name, bg_url;
 
-    @OneToOne(mappedBy = "specialty")
+    @OneToMany(mappedBy="specialty")
     @JsonIgnore
-    private Doctor doctor;
+    private Set<Doctor> doctors;
 
     public Integer getId() {
         return id;
@@ -43,11 +44,11 @@ public class Specialty {
         this.bg_url = bg_url;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public Set<Doctor> getDoctors() {
+        return doctors;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setDoctors(Set<Doctor> doctors) {
+        this.doctors = doctors;
     }
 }
