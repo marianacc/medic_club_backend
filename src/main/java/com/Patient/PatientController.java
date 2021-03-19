@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "patient")
+@RequestMapping(value = "patients")
 public class PatientController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class PatientController {
             value = "sign-up",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void signUp(@RequestBody PatientModel patientModel){
+    public ObjectResponse signUp(@RequestBody PatientModel patientModel){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
             patientService.save(patientModel);
@@ -29,6 +29,7 @@ public class PatientController {
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());
         }
+        return objectResponse;
     }
 
 }

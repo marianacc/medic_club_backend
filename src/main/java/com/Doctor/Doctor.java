@@ -26,9 +26,18 @@ public class Doctor {
 
     private String bio;
     private Double pricing;
+    private Double score;
 
     public Integer getId() {
         return id;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
 
     public void setId(Integer id) {

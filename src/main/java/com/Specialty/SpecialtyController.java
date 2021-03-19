@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "specialty")
+@RequestMapping(value = "specialties")
 public class SpecialtyController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class SpecialtyController {
             value = "create",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void CreateSpecialty(@RequestBody SpecialtyModel specialtyModel){
+    public ObjectResponse CreateSpecialty(@RequestBody SpecialtyModel specialtyModel){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
             specialtyService.save(specialtyModel);
@@ -29,6 +29,21 @@ public class SpecialtyController {
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());
         }
+        return objectResponse;
     }
 
+    @RequestMapping(
+            value = "all",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    ObjectResponse CreateSpecialty(){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            objectResponse.setData(specialtyService.listAllSpecialties());
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
 }

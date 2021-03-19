@@ -5,11 +5,14 @@ import com.AppUser.AppUserDao;
 import com.Patient.Patient;
 import com.Patient.PatientDao;
 import com.Patient.PatientModel;
+import com.Rating.RatingDao;
 import com.Specialty.Specialty;
 import com.Specialty.SpecialtyDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class DoctorService {
@@ -19,6 +22,9 @@ public class DoctorService {
 
     @Autowired
     private SpecialtyDao specialtyDao;
+
+    @Autowired
+    private RatingDao ratingDao;
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -37,5 +43,9 @@ public class DoctorService {
         doctor.setSpecialty(specialtyDao.findById(doctorModel.getId_specialty()));
         doctor.setAppUser(appUser);
         doctorDao.save(doctor);
+    }
+
+    public ArrayList<Doctor> listMostRated() {
+        return (ArrayList<Doctor>) doctorDao.findTop10ByOrderByScoreAsc();
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "doctor")
+@RequestMapping(value = "doctors")
 public class DoctorController {
 
     @Autowired
@@ -20,7 +20,7 @@ public class DoctorController {
             value = "sign-up",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void signUp(@RequestBody DoctorModel doctorModel){
+    public ObjectResponse signUp(@RequestBody DoctorModel doctorModel){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
             doctorService.save(doctorModel);
@@ -28,6 +28,21 @@ public class DoctorController {
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());
         }
+        return objectResponse;
     }
 
+    @RequestMapping(
+            value = "list/most-rated",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ObjectResponse getMostRated(){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            objectResponse.setData(doctorService.listMostRated());
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
 }

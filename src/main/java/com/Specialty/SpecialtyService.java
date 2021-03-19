@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class SpecialtyService {
 
@@ -26,5 +28,9 @@ public class SpecialtyService {
         specialty.setBg_url(specialtyModel.getBg_url());
         specialty.setName(specialtyModel.getName());
         specialtyDao.save(specialty);
+    }
+
+    public ArrayList<Specialty> listAllSpecialties(){
+        return (ArrayList<Specialty>) specialtyDao.findAll();
     }
 }
