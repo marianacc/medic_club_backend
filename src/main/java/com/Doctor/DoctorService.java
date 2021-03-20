@@ -61,6 +61,7 @@ public class DoctorService {
         doctor.setSpecialty(specialtyDao.findById(doctorModel.getId_specialty()));
         doctor.setScore(doctorModel.getScore());
         doctor.setAppUser(appUser);
+        // Se crea un consultorio vacio y se inserta al doctor en este
         ConsultingRoom consultingRoom = new ConsultingRoom();
         consultingRoomDao.save(consultingRoom);
         doctor.setConsultingRoom(consultingRoom);
@@ -76,7 +77,6 @@ public class DoctorService {
     }
 
     public void update(int id, DoctorModel doctorModel) {
-        System.out.println(doctorModel.getSchedules());
         AppUser appUser = appUserDao.findByDoctorId(id);
         appUser.setPassword(bCryptPasswordEncoder.encode(doctorModel.getPassword()));
         appUserDao.save(appUser);
@@ -91,11 +91,12 @@ public class DoctorService {
         consultingRoom.setTime_interval(doctorModel.getTime_interval());
         consultingRoomDao.save(consultingRoom);
 
+        // Se vacia la lista de horarios existentes en la base de datos con el id del consultorio a actualizar
         Set<Schedule> schedulesConsultingRoom = consultingRoom.getSchedules();
         schedulesConsultingRoom.clear();
-
         clearSchedulesFromConsultingRoom(consultingRoom);
 
+        // Se agregan los nuevos horarios recibidos en el doctor model a la bd
         for (Schedule schedule: doctorModel.getSchedule()
              ) {
             Schedule schedule1 = new Schedule();

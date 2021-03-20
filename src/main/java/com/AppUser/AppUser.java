@@ -3,6 +3,7 @@ package com.AppUser;
 import com.Doctor.Doctor;
 import com.Patient.Patient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -14,15 +15,14 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 
     private String first_name;
     private String last_name;
     private String genre;
     private Date birth_date;
     private String photo_url;
-
-    @JsonIgnore
-    private String password;
 
     public AppUser() {
     }

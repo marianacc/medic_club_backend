@@ -33,7 +33,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, PATIENT_CREATION).permitAll()
                 .antMatchers(HttpMethod.POST, DOCTOR_CREATION).permitAll()
-
                 .antMatchers("*","/gs-guide-websocket").permitAll()
                 .anyRequest().authenticated()
                 .and()
