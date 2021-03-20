@@ -2,6 +2,7 @@ package com.ConsultingRoom;
 
 import com.Doctor.Doctor;
 import com.Schedule.Schedule;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -12,9 +13,12 @@ public class ConsultingRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    String latitude, longitude, time_interval, phone_number;
+    String latitude, longitude;
+    int time_interval;
+
 
     @OneToMany(mappedBy="consultingRoom")
+    @JsonIgnore
     private Set<Doctor> doctors;
 
     @OneToMany(mappedBy="consultingRoom")
@@ -52,20 +56,12 @@ public class ConsultingRoom {
         this.longitude = longitude;
     }
 
-    public String getTime_interval() {
+    public int getTime_interval() {
         return time_interval;
     }
 
-    public void setTime_interval(String time_interval) {
+    public void setTime_interval(int time_interval) {
         this.time_interval = time_interval;
-    }
-
-    public String getPhone_number() {
-        return phone_number;
-    }
-
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
     }
 
     public Set<Doctor> getDoctors() {

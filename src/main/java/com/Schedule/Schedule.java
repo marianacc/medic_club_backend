@@ -2,6 +2,7 @@ package com.Schedule;
 
 import com.ConsultingRoom.ConsultingRoom;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -9,11 +10,12 @@ import javax.persistence.*;
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="consulting_room_id", nullable=true)
-    @JsonBackReference(value = "consulting_room_id")
+    @JoinColumn(name="consulting_room_id", nullable=false)
+    @JsonIgnore
     private ConsultingRoom consultingRoom;
 
     private String day, initial_hour, final_hour;
