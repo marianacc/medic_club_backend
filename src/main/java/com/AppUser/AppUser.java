@@ -13,6 +13,7 @@ public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

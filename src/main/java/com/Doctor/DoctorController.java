@@ -20,7 +20,11 @@ public class DoctorController {
     public ObjectResponse signUp(@RequestBody DoctorModel doctorModel){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
-            doctorService.save(doctorModel);
+            Boolean response = doctorService.save(doctorModel);
+            if(!response){
+                objectResponse.setSuccess(false);
+                objectResponse.setStatusMessage("El correo ya existe");
+            }
         }catch(Exception e){
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());

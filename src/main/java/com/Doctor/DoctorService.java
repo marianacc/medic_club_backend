@@ -51,21 +51,26 @@ public class DoctorService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public void save(DoctorModel doctorModel){
-        AppUser appUser = new AppUser();
-        appUser.setEmail(doctorModel.getEmail());
-        appUser.setPassword(bCryptPasswordEncoder.encode(doctorModel.getPassword()));
-        appUser.setFirst_name(doctorModel.getFirst_name());
-        appUser.setLast_name(doctorModel.getLast_name());
-        Doctor doctor = new Doctor();
-        doctor.setSpecialty(specialtyDao.findById(doctorModel.getId_specialty()));
-        doctor.setScore(doctorModel.getScore());
-        doctor.setAppUser(appUser);
-        // Se crea un consultorio vacio y se inserta al doctor en este
-        ConsultingRoom consultingRoom = new ConsultingRoom();
-        consultingRoomDao.save(consultingRoom);
-        doctor.setConsultingRoom(consultingRoom);
-        doctorDao.save(doctor);
+    public Boolean save(DoctorModel doctorModel){
+        if(appUserDao.findByEmail(doctorModel.getEmail()) == null){
+            AppUser appUser = new AppUser();
+            appUser.setEmail(doctorModel.getEmail());
+            appUser.setPassword(bCryptPasswordEncoder.encode(doctorModel.getPassword()));
+            appUser.setFirst_name(doctorModel.getFirst_name());
+            appUser.setLast_name(doctorModel.getLast_name());
+            Doctor doctor = new Doctor();
+            doctor.setSpecialty(specialtyDao.findById(doctorModel.getId_specialty()));
+            doctor.setScore(doctorModel.getScore());
+            doctor.setAppUser(appUser);
+            // Se crea un consultorio vacio y se inserta al doctor en este
+            ConsultingRoom consultingRoom = new ConsultingRoom();
+            consultingRoomDao.save(consultingRoom);
+            doctor.setConsultingRoom(consultingRoom);
+            doctorDao.save(doctor);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public ArrayList<Doctor> listMostRated() {

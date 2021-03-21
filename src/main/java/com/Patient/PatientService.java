@@ -13,9 +13,6 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class PatientService {
 
-    /*@Value("${medic-club.security.salt}")
-    private String salt;*/
-
     @Autowired
     private AppUserDao appUserDao;
 
@@ -29,24 +26,20 @@ public class PatientService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public void save(PatientModel patientModel){
-
+    public Boolean save(PatientModel patientModel){
         AppUser appUser = new AppUser();
-        appUser.setEmail(patientModel.getEmail());
-        appUser.setPassword(bCryptPasswordEncoder.encode(patientModel.getPassword()));
-        appUser.setFirst_name(patientModel.getFirst_name());
-        appUser.setLast_name(patientModel.getLast_name());
-        appUserDao.save(appUser);
-        Patient patient = new Patient();
-        patient.setAppUser(appUser);
-        patientDao.save(patient);
+        if(appUserDao.findByEmail(patientModel.getEmail()) == null){
+            appUser.setEmail(patientModel.getEmail());
+            appUser.setPassword(bCryptPasswordEncoder.encode(patientModel.getPassword()));
+            appUser.setFirst_name(patientModel.getFirst_name());
+            appUser.setLast_name(patientModel.getLast_name());
+            appUserDao.save(appUser);
+            Patient patient = new Patient();
+            patient.setAppUser(appUser);
+            patientDao.save(patient);
+            return true;
+        } else {
+            return false;
+        }
     }
-
-    /*public String hashPassword(String password){
-        // Se aplica la función hash 256+salt a la contraseña
-        String sha256hex = Hashing.sha256()
-                .hashString(password+salt, StandardCharsets.UTF_8)
-                .toString();
-        return sha256hex;
-    }*/
 }

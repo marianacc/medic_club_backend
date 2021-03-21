@@ -24,12 +24,15 @@ public class PatientController {
     public ObjectResponse signUp(@RequestBody PatientModel patientModel){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
-            patientService.save(patientModel);
+            Boolean response = patientService.save(patientModel);
+            if(!response){
+                objectResponse.setSuccess(false);
+                objectResponse.setStatusMessage("El correo ya existe");
+            }
         }catch(Exception e){
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());
         }
         return objectResponse;
     }
-
 }
