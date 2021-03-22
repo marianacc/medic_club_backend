@@ -22,6 +22,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
+import static com.Security.SecurityConstants.APP_USER_ACTIVE;
+import static com.Security.SecurityConstants.APP_USER_CREATED;
+
 @Transactional
 @Service
 public class DoctorService {
@@ -58,6 +61,7 @@ public class DoctorService {
             appUser.setPassword(bCryptPasswordEncoder.encode(doctorModel.getPassword()));
             appUser.setFirst_name(doctorModel.getFirst_name());
             appUser.setLast_name(doctorModel.getLast_name());
+            appUser.setStatus(APP_USER_CREATED);
             Doctor doctor = new Doctor();
             doctor.setSpecialty(specialtyDao.findById(doctorModel.getId_specialty()));
             doctor.setScore(doctorModel.getScore());
@@ -114,6 +118,9 @@ public class DoctorService {
         }
         consultingRoom.setSchedules(schedulesConsultingRoom);
         consultingRoomDao.save(consultingRoom);
+
+        appUser.setStatus(APP_USER_ACTIVE);
+        appUserDao.save(appUser);
     }
 
     private void clearSchedulesFromConsultingRoom(ConsultingRoom consultingRoom) {

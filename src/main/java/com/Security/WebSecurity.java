@@ -12,8 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import static com.Security.SecurityConstants.DOCTOR_CREATION;
-import static com.Security.SecurityConstants.PATIENT_CREATION;
+import static com.Security.SecurityConstants.*;
 
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
@@ -33,6 +32,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, PATIENT_CREATION).permitAll()
                 .antMatchers(HttpMethod.POST, DOCTOR_CREATION).permitAll()
+                .antMatchers(HttpMethod.GET, SWAGGER_API_DOCUMENTATION).permitAll()
+                .antMatchers(HttpMethod.GET, SWAGGER_API_UI).permitAll()
+                .antMatchers(
+                        "/v2/api-docs",
+                        "/swagger-resources/**",
+                        "/swagger-ui.html",
+                        "/webjars/**" ,
+                        /*Probably not needed*/ "/swagger.json")
+                .permitAll()
                 .antMatchers("*","/gs-guide-websocket").permitAll()
                 .anyRequest().authenticated()
                 .and()

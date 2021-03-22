@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 
+import static com.Security.SecurityConstants.APP_USER_ACTIVE;
+
 @Service
 public class PatientService {
 
@@ -33,6 +35,7 @@ public class PatientService {
             appUser.setPassword(bCryptPasswordEncoder.encode(patientModel.getPassword()));
             appUser.setFirst_name(patientModel.getFirst_name());
             appUser.setLast_name(patientModel.getLast_name());
+            appUser.setStatus(APP_USER_ACTIVE);
             appUserDao.save(appUser);
             Patient patient = new Patient();
             patient.setAppUser(appUser);

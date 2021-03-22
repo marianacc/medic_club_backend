@@ -18,12 +18,20 @@ public class AppUser {
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-
     private String first_name;
     private String last_name;
     private String genre;
     private Date birth_date;
     private String photo_url;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public AppUser() {
     }

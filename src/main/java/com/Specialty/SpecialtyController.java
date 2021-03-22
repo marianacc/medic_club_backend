@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "specialties")
+@RequestMapping(value = "api/specialties")
 public class SpecialtyController {
 
     @Autowired
