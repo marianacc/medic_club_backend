@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 
-import static com.Security.SecurityConstants.APP_USER_ACTIVE;
+import static com.GlobalVariables.APP_USER_ACTIVE;
 
 @Service
 public class PatientService {

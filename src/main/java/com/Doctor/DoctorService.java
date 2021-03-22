@@ -22,8 +22,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import static com.Security.SecurityConstants.APP_USER_ACTIVE;
-import static com.Security.SecurityConstants.APP_USER_CREATED;
+import static com.GlobalVariables.APP_USER_ACTIVE;
+import static com.GlobalVariables.APP_USER_CREATED;
 
 @Transactional
 @Service
