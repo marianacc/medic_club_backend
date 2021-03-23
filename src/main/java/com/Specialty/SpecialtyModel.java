@@ -2,7 +2,8 @@ package com.Specialty;
 
 public class SpecialtyModel {
 
-    private String name, bg_url;
+    private String name;
+    private String bg_url;
 
     public String getName() {
         return name;

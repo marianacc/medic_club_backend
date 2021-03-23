@@ -1,39 +1,41 @@
 package com.Schedule;
 
 import com.ConsultingRoom.ConsultingRoom;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 @Entity
 public class Schedule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Integer id;
+    private String day;
+    private String initial_hour;
+    private String final_hour;
 
     @ManyToOne
     @JoinColumn(name="consulting_room_id", nullable=false)
     @JsonIgnore
     private ConsultingRoom consultingRoom;
 
-    private String day, initial_hour, final_hour;
+    // Constructores
+    public Schedule() {
+    }
 
+    public Schedule(Integer id) {
+        this.id = id;
+    }
+
+    // Getters y setters
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public ConsultingRoom getConsultingRoom() {
-        return consultingRoom;
-    }
-
-    public void setConsultingRoom(ConsultingRoom consultingRoom) {
-        this.consultingRoom = consultingRoom;
     }
 
     public String getDay() {
@@ -58,5 +60,13 @@ public class Schedule {
 
     public void setFinal_hour(String final_hour) {
         this.final_hour = final_hour;
+    }
+
+    public ConsultingRoom getConsultingRoom() {
+        return consultingRoom;
+    }
+
+    public void setConsultingRoom(ConsultingRoom consultingRoom) {
+        this.consultingRoom = consultingRoom;
     }
 }

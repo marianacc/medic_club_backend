@@ -1,7 +1,5 @@
 package com.Specialty;
 
-import com.Doctor.DoctorModel;
-import com.Doctor.DoctorService;
 import com.ObjectResponse.ObjectResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -11,11 +9,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "api/specialties")
+@RequestMapping(value = "specialties")
 public class SpecialtyController {
 
+    private SpecialtyService specialtyService;
+
     @Autowired
-    SpecialtyService specialtyService;
+    public void SpecialtyController(SpecialtyService specialtyService){
+        this.specialtyService = specialtyService;
+    }
 
     @RequestMapping(
             value = "create",
@@ -36,7 +38,7 @@ public class SpecialtyController {
             value = "all",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    ObjectResponse CreateSpecialty(){
+    public ObjectResponse ListAllSpecialties(){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
             objectResponse.setData(specialtyService.listAllSpecialties());

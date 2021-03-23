@@ -1,21 +1,20 @@
 package com.Patient;
 
-import com.AppUser.AppUser;
-import com.AppUser.AppUserService;
 import com.ObjectResponse.ObjectResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "api/patients")
+@RequestMapping(value = "patients")
 public class PatientController {
 
+    private PatientService patientService;
+
     @Autowired
-    PatientService patientService;
+    public void PatientController(PatientService patientService){
+        this.patientService = patientService;
+    }
 
     @RequestMapping(
             value = "sign-up",
@@ -28,6 +27,27 @@ public class PatientController {
             if(!response){
                 objectResponse.setSuccess(false);
                 objectResponse.setStatusMessage("El correo ya existe");
+            }
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
+
+    @RequestMapping(
+            value = "app-user/{app_user_id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ObjectResponse getPatientByAppUserId(@PathVariable("app_user_id") int app_user_id){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            Patient patient = patientService.findPatientByAppUserId(app_user_id);
+            if (patient != null){
+                objectResponse.setData(patient);
+            } else {
+                objectResponse.setSuccess(false);
+                objectResponse.setStatusMessage("No se encontro paciente con appUserId = "+app_user_id);
             }
         }catch(Exception e){
             objectResponse.setSuccess(false);

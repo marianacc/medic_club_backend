@@ -10,6 +10,7 @@ import static java.util.Collections.emptyList;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     private AppUserDao appUserDao;
 
     public UserDetailsServiceImpl(AppUserDao applicationUserRepository) {

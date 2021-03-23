@@ -2,15 +2,15 @@ package com.Schedule;
 
 public class ScheduleModel {
 
-    private String day, initial_hour, final_hour;
+    private String day;
+    private String initial_hour;
+    private String final_hour;
 
     public String getDay() {
         return day;
     }
 
-    public void setDay(String day) {
-        this.day = day;
-    }
+    public void setDay(String day) { this.day = day; }
 
     public String getInitial_hour() {
         return initial_hour;

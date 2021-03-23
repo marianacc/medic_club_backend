@@ -1,9 +1,7 @@
 package com.Rating;
 
-import com.AppUser.AppUser;
 import com.Doctor.Doctor;
 import com.Patient.Patient;
-import com.Specialty.Specialty;
 
 import javax.persistence.*;
 
@@ -23,6 +21,15 @@ public class Rating {
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
     private Patient patient;
 
+    // Constructores
+    public Rating() {
+    }
+
+    public Rating(Integer id) {
+        this.id = id;
+    }
+
+    // Getters y setters
     public Integer getId() {
         return id;
     }
@@ -39,9 +46,7 @@ public class Rating {
         this.score = score;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
-    }
+    public Doctor getDoctor() { return doctor; }
 
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;

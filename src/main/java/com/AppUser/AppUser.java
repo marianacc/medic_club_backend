@@ -13,7 +13,6 @@ public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer id;
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -23,22 +22,8 @@ public class AppUser {
     private String genre;
     private Date birth_date;
     private String photo_url;
-    private int status;
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public AppUser() {
-    }
-
-    public AppUser(Integer id) {
-        this.id = id;
-    }
+    private Integer status;
+    private String role;
 
     @OneToOne(mappedBy = "appUser")
     @JsonIgnore
@@ -48,6 +33,15 @@ public class AppUser {
     @JsonIgnore
     private Doctor doctor;
 
+    // Costructores
+    public AppUser() {
+    }
+
+    public AppUser(Integer id) {
+        this.id = id;
+    }
+
+    // Getters y setters
     public Integer getId() {
         return id;
     }
@@ -110,6 +104,22 @@ public class AppUser {
 
     public void setPhoto_url(String photo_url) {
         this.photo_url = photo_url;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Patient getPatient() {

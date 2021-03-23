@@ -1,25 +1,33 @@
 package com.Specialty;
 
 import com.Doctor.Doctor;
-import com.Patient.Patient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.Set;
 
 @Entity
 public class Specialty {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    String name, bg_url;
+    private String name;
+    private String bg_url;
 
     @OneToMany(mappedBy="specialty")
     @JsonIgnore
     private Set<Doctor> doctors;
 
+    // Constructores
+    public Specialty() {
+    }
+
+    public Specialty(Integer id) {
+        this.id = id;
+    }
+
+    // Getters y setters
     public Integer getId() {
         return id;
     }

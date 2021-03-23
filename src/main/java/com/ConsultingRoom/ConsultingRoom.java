@@ -9,13 +9,13 @@ import java.util.Set;
 
 @Entity
 public class ConsultingRoom {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    String latitude, longitude;
-    int time_interval;
-
+    private String latitude;
+    private String longitude;
+    private Integer time_interval;
 
     @OneToMany(mappedBy="consultingRoom")
     @JsonIgnore
@@ -24,6 +24,16 @@ public class ConsultingRoom {
     @OneToMany(mappedBy="consultingRoom")
     private Set<Schedule> schedules;
 
+    // Constructores
+
+    public ConsultingRoom() {
+    }
+
+    public ConsultingRoom(Integer id) {
+        this.id = id;
+    }
+
+    // Getters y setters
     public Integer getId() {
         return id;
     }
@@ -34,14 +44,6 @@ public class ConsultingRoom {
 
     public String getLatitude() {
         return latitude;
-    }
-
-    public Set<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(Set<Schedule> schedules) {
-        this.schedules = schedules;
     }
 
     public void setLatitude(String latitude) {
@@ -72,4 +74,11 @@ public class ConsultingRoom {
         this.doctors = doctors;
     }
 
+    public Set<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<Schedule> schedules) {
+        this.schedules = schedules;
+    }
 }

@@ -4,53 +4,41 @@ import com.AppUser.AppUser;
 import com.AppUser.AppUserDao;
 import com.ConsultingRoom.ConsultingRoom;
 import com.ConsultingRoom.ConsultingRoomDao;
-import com.Patient.Patient;
-import com.Patient.PatientDao;
-import com.Patient.PatientModel;
 import com.Rating.RatingDao;
 import com.Schedule.Schedule;
 import com.Schedule.ScheduleDao;
-import com.Specialty.Specialty;
 import com.Specialty.SpecialtyDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.Set;
 
-import static com.GlobalVariables.APP_USER_ACTIVE;
-import static com.GlobalVariables.APP_USER_CREATED;
+import static com.GlobalVariables.*;
 
 @Transactional
 @Service
 public class DoctorService {
 
-    @Autowired
     private DoctorDao doctorDao;
-
-    @Autowired
     private SpecialtyDao specialtyDao;
-
-    @Autowired
     private AppUserDao appUserDao;
-
-    @Autowired
     private ConsultingRoomDao consultingRoomDao;
-
-    @Autowired
     private ScheduleDao scheduleDao;
-
-    @Autowired
     private RatingDao ratingDao;
-
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public DoctorService(DoctorDao doctorDao,
-                          BCryptPasswordEncoder bCryptPasswordEncoder) {
+    @Autowired
+    public void DoctorService(DoctorDao doctorDao, SpecialtyDao specialtyDao, AppUserDao appUserDao,
+                              ConsultingRoomDao consultingRoomDao, ScheduleDao scheduleDao, RatingDao ratingDao,
+                              BCryptPasswordEncoder bCryptPasswordEncoder){
+        this.doctorDao = doctorDao;
+        this.specialtyDao = specialtyDao;
+        this.appUserDao = appUserDao;
+        this.consultingRoomDao = consultingRoomDao;
+        this.scheduleDao = scheduleDao;
+        this.ratingDao = ratingDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -62,6 +50,7 @@ public class DoctorService {
             appUser.setFirst_name(doctorModel.getFirst_name());
             appUser.setLast_name(doctorModel.getLast_name());
             appUser.setStatus(APP_USER_CREATED);
+            appUser.setRole(DOCTOR);
             Doctor doctor = new Doctor();
             doctor.setSpecialty(specialtyDao.findById(doctorModel.getId_specialty()));
             doctor.setScore(doctorModel.getScore());
@@ -126,5 +115,10 @@ public class DoctorService {
     private void clearSchedulesFromConsultingRoom(ConsultingRoom consultingRoom) {
         scheduleDao.deleteAllByConsultingRoomId(consultingRoom.getId());
         System.out.println("Horarios borrados con exito");
+    }
+
+    public Doctor findDoctorByAppUserId(int app_user_id) {
+        AppUser appUser = new AppUser(app_user_id);
+        return doctorDao.findByAppUser(appUser);
     }
 }

@@ -4,7 +4,6 @@ import java.sql.Date;
 
 public class PatientModel {
 
-
     private String email;
     private String password;
     private String first_name;
@@ -12,33 +11,15 @@ public class PatientModel {
     private String genre;
     private Date birth_date;
     private String photo_url;
-
     private String weight;
     private String height;
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
-
-    public String getHeight() {
-        return height;
-    }
-
-    public void setHeight(String height) {
-        this.height = height;
-    }
+    private String role;
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public void setEmail(String email) { this.email = email; }
 
     public String getPassword() {
         return password;
@@ -86,5 +67,27 @@ public class PatientModel {
 
     public void setPhoto_url(String photo_url) {
         this.photo_url = photo_url;
+    }
+
+    public String getWeight() { return weight; }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
