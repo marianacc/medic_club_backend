@@ -24,9 +24,18 @@ public class AppUser {
     private Date birth_date;
     private String photo_url;
     private int status;
+    private String role;
 
     public int getStatus() {
         return status;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public void setStatus(int status) {

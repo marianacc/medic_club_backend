@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "api/specialties")
+@RequestMapping(value = "specialties")
 public class SpecialtyController {
 
     @Autowired
@@ -36,7 +36,7 @@ public class SpecialtyController {
             value = "all",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    ObjectResponse CreateSpecialty(){
+    ObjectResponse ListAllSpecialties(){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
             objectResponse.setData(specialtyService.listAllSpecialties());

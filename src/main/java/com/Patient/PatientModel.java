@@ -16,6 +16,16 @@ public class PatientModel {
     private String weight;
     private String height;
 
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getWeight() {
         return weight;
     }

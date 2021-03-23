@@ -27,8 +27,14 @@ public class DoctorModel {
 
     private ArrayList<Schedule> schedule;
 
-    public ArrayList<Schedule> getSchedules() {
-        return schedule;
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public ArrayList<Schedule> getSchedule() {

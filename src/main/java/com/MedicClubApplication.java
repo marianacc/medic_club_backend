@@ -1,10 +1,12 @@
 package com;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
@@ -20,18 +22,18 @@ public class MedicClubApplication {
 		return new BCryptPasswordEncoder();
 	}
 
-	/*
-	@Bean
-	public Docket swaggerConfiguration(){
-		// Devuelve una instancia preparada de tipo Docket
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-				.paths(PathSelectors.ant("api/*"))
-				.apis(RequestHandlerSelectors.basePackage("com.Doctor"))
-				.build();
-	}*/
-
 	public static void main(String[] args) {
 		SpringApplication.run(MedicClubApplication.class, args);
 	}
+
+	@Bean
+	public Docket swagger() {
+		return new Docket(DocumentationType.SWAGGER_2)
+				.select()
+				.apis(RequestHandlerSelectors.basePackage(this.getClass().getPackageName()))
+				.paths(PathSelectors.any())
+				.build()
+				.useDefaultResponseMessages(false);
+	}
+
 }

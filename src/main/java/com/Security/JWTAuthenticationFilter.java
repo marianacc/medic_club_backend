@@ -41,6 +41,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         this.authenticationManager = authenticationManager;
         this.appUserDao = ctx.getBean(AppUserDao.class);
         this.jwtDao = ctx.getBean(JwtDao.class);
+        setFilterProcessesUrl("/app-user/auth/login");
     }
 
     @Override
@@ -72,8 +73,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String token = JWT.create()
                 .withClaim("appUserId",loggedUser.getId())
+                .withClaim("status", loggedUser.getStatus())
+                .withClaim("role", loggedUser.getRole())
                 .withSubject(((User) auth.getPrincipal()).getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
         Jwt newToken= new Jwt();
         newToken.setToken(token);
