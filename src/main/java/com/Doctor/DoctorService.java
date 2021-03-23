@@ -67,11 +67,11 @@ public class DoctorService {
     }
 
     public ArrayList<Doctor> listMostRated() {
-        return (ArrayList<Doctor>) doctorDao.findTop10ByOrderByScoreDesc();
+        return (ArrayList<Doctor>) doctorDao.findTop10ByAppUserStatusOrderByScoreDesc(1);
     }
 
     public ArrayList<Doctor> listDoctorsBySpecialty(int specialty_id) {
-        return (ArrayList<Doctor>) doctorDao.findDoctorsBySpecialtyId(specialty_id);
+        return (ArrayList<Doctor>) doctorDao.findDoctorsBySpecialtyIdAndAppUserStatus(specialty_id, 1);
     }
 
     public void update(int id, DoctorModel doctorModel) {
@@ -121,4 +121,52 @@ public class DoctorService {
         AppUser appUser = new AppUser(app_user_id);
         return doctorDao.findByAppUser(appUser);
     }
+
+    public Boolean saveMoreData(DoctorModel doctorModel){
+        if(appUserDao.findByEmail(doctorModel.getEmail()) == null){
+            AppUser appUser = new AppUser();
+            appUser.setEmail(doctorModel.getEmail());
+            appUser.setPassword(bCryptPasswordEncoder.encode(doctorModel.getPassword()));
+            appUser.setFirst_name(doctorModel.getFirst_name());
+            appUser.setLast_name(doctorModel.getLast_name());
+            appUser.setStatus(doctorModel.getStatus());
+            appUser.setRole(DOCTOR);
+            Doctor doctor = new Doctor();
+            doctor.setSpecialty(specialtyDao.findById(doctorModel.getId_specialty()));
+            if (doctorModel.getStatus() == 1){
+                doctor.setBio(doctorModel.getBio());
+                doctor.setPricing(doctorModel.getPricing());
+                doctor.setPhone_number(doctorModel.getPhone_number());
+            }
+            doctor.setScore(doctorModel.getScore());
+            doctor.setAppUser(appUser);
+            // Se crea un consultorio vacio y se inserta al doctor en este
+            ConsultingRoom consultingRoom = new ConsultingRoom();
+            consultingRoomDao.save(consultingRoom);
+            if (doctorModel.getStatus() == 1){
+                doctor.setBio(doctorModel.getBio());
+                doctor.setPricing(doctorModel.getPricing());
+                doctor.setPhone_number(doctorModel.getPhone_number());
+                consultingRoom.setLatitude(doctorModel.getLatitude());
+                consultingRoom.setLongitude(doctorModel.getLongitude());
+                consultingRoom.setTime_interval(doctorModel.getTime_interval());
+            }
+            doctor.setConsultingRoom(consultingRoom);
+            doctorDao.save(doctor);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void loadDoctorsFromJson(ArrayList<DoctorModel> doctorModels){
+        for (DoctorModel doctorModel : doctorModels
+             ) {
+            if (saveMoreData(doctorModel)){
+                System.out.println("Registro exitoso: " + doctorModel.getFirst_name() + " " + doctorModel.getLast_name() + ".");
+            }
+
+        }
+    }
+
 }

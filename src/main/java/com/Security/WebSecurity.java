@@ -33,6 +33,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, PATIENT_CREATION).permitAll()
                 .antMatchers(HttpMethod.POST, DOCTOR_CREATION).permitAll()
                 .antMatchers(HttpMethod.GET, SWAGGER_API_DOCUMENTATION).permitAll()
+                .antMatchers(HttpMethod.POST, MULTIPLE_PATIENTS_CREATION).permitAll()
                 .antMatchers(HttpMethod.GET, SWAGGER_API_UI).permitAll()
                 .antMatchers(
                         "/v2/api-docs",

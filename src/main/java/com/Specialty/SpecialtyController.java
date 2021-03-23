@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping(value = "specialties")
 public class SpecialtyController {
@@ -42,6 +44,21 @@ public class SpecialtyController {
         ObjectResponse objectResponse = new ObjectResponse();
         try{
             objectResponse.setData(specialtyService.listAllSpecialties());
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
+
+    @RequestMapping(
+            value = "loadSpecialtiesFromJson",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ObjectResponse loadSpecialtiesFromJson(@RequestBody ArrayList<SpecialtyModel> specialtyModels){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            specialtyService.loadSpecialtiesFromJson(specialtyModels);
         }catch(Exception e){
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());

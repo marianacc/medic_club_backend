@@ -22,9 +22,18 @@ public class DoctorModel {
     private String latitude;
     private String longitude;
     private Double Score;
-    private Integer time_interval;
+    private int time_interval;
     private ArrayList<Schedule> schedule;
     private String role;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getEmail() {
         return email;
@@ -165,4 +174,6 @@ public class DoctorModel {
     }
 
     public void setRole(String role) { this.role = role; }
+
+
 }

@@ -68,6 +68,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withClaim("appUserId",loggedUser.getId())
                 .withClaim("status", loggedUser.getStatus())
                 .withClaim("role", loggedUser.getRole())
+                .withClaim("name", loggedUser.getFirst_name() + " " +loggedUser.getLast_name())
                 .withSubject(((User) auth.getPrincipal()).getUsername())
                 .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
         Jwt newToken= new Jwt();

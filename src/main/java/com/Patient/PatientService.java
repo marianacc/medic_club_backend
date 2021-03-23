@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 import static com.GlobalVariables.APP_USER_ACTIVE;
 import static com.GlobalVariables.PATIENT;
 
@@ -45,5 +47,14 @@ public class PatientService {
     public Patient findPatientByAppUserId(int app_user_id) {
         AppUser appUser = new AppUser(app_user_id);
         return patientDao.findByAppUser(appUser);
+    }
+
+    public void loadPatientsFromJson(ArrayList<PatientModel> patientModels){
+        for (PatientModel patientModel : patientModels
+             ) {
+            if (save(patientModel)){
+                System.out.println("Registro exitoso: " + patientModel.getFirst_name() + " " + patientModel.getLast_name() + ".");
+            }
+        }
     }
 }

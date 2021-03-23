@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping(value = "doctors")
 public class DoctorController {
@@ -94,6 +96,21 @@ public class DoctorController {
                 objectResponse.setSuccess(false);
                 objectResponse.setStatusMessage("No se encontro doctor con appUserId = "+app_user_id);
             }
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
+
+    @RequestMapping(
+            value = "loadDoctorsFromJson",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ObjectResponse loadDoctorsFromJson(@RequestBody ArrayList<DoctorModel> doctorModels){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            doctorService.loadDoctorsFromJson(doctorModels);
         }catch(Exception e){
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());

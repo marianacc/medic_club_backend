@@ -28,9 +28,17 @@ public class SpecialtyService {
         specialty.setBg_url(specialtyModel.getBg_url());
         specialty.setName(specialtyModel.getName());
         specialtyDao.save(specialty);
+        System.out.println("Especialidad: " + specialtyModel.getName() + " creada." );
     }
 
     public ArrayList<Specialty> listAllSpecialties(){
         return (ArrayList<Specialty>) specialtyDao.findAll();
+    }
+
+    public void loadSpecialtiesFromJson(ArrayList<SpecialtyModel> specialtyModels) {
+        for (SpecialtyModel specialtyModel : specialtyModels
+             ) {
+            save(specialtyModel);
+        }
     }
 }
