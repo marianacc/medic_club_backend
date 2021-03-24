@@ -133,16 +133,10 @@ public class DoctorService {
             appUser.setRole(DOCTOR);
             Doctor doctor = new Doctor();
             doctor.setSpecialty(specialtyDao.findById(doctorModel.getId_specialty()));
-            if (doctorModel.getStatus() == 1){
-                doctor.setBio(doctorModel.getBio());
-                doctor.setPricing(doctorModel.getPricing());
-                doctor.setPhone_number(doctorModel.getPhone_number());
-            }
             doctor.setScore(doctorModel.getScore());
             doctor.setAppUser(appUser);
             // Se crea un consultorio vacio y se inserta al doctor en este
             ConsultingRoom consultingRoom = new ConsultingRoom();
-            consultingRoomDao.save(consultingRoom);
             if (doctorModel.getStatus() == 1){
                 doctor.setBio(doctorModel.getBio());
                 doctor.setPricing(doctorModel.getPricing());
@@ -151,6 +145,7 @@ public class DoctorService {
                 consultingRoom.setLongitude(doctorModel.getLongitude());
                 consultingRoom.setTime_interval(doctorModel.getTime_interval());
             }
+            consultingRoomDao.save(consultingRoom);
             doctor.setConsultingRoom(consultingRoom);
             doctorDao.save(doctor);
             return true;

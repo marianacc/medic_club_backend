@@ -5,6 +5,15 @@ public class ScheduleModel {
     private String day;
     private String initial_hour;
     private String final_hour;
+    private Integer consulting_room_id;
+
+    public Integer getConsulting_room_id() {
+        return consulting_room_id;
+    }
+
+    public void setConsulting_room_id(Integer consulting_room_id) {
+        this.consulting_room_id = consulting_room_id;
+    }
 
     public String getDay() {
         return day;
