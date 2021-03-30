@@ -1,9 +1,11 @@
 package com.Schedule;
 
 import com.ConsultingRoom.ConsultingRoom;
+import com.Interval.ScheduleInterval;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Schedule {
@@ -21,8 +23,21 @@ public class Schedule {
     @JsonIgnore
     private ConsultingRoom consultingRoom;
 
+    @OneToMany(mappedBy="schedule")
+    @JsonIgnore
+    private Set<ScheduleInterval> scheduleIntervals;
+
+
     // Constructores
     public Schedule() {
+    }
+
+    public Set<ScheduleInterval> getIntervals() {
+        return scheduleIntervals;
+    }
+
+    public void setIntervals(Set<ScheduleInterval> scheduleIntervals) {
+        this.scheduleIntervals = scheduleIntervals;
     }
 
     public Schedule(Integer id) {

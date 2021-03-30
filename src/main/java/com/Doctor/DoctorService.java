@@ -4,7 +4,6 @@ import com.AppUser.AppUser;
 import com.AppUser.AppUserDao;
 import com.ConsultingRoom.ConsultingRoom;
 import com.ConsultingRoom.ConsultingRoomDao;
-import com.Rating.RatingDao;
 import com.Schedule.Schedule;
 import com.Schedule.ScheduleDao;
 import com.Specialty.SpecialtyDao;
@@ -26,19 +25,17 @@ public class DoctorService {
     private AppUserDao appUserDao;
     private ConsultingRoomDao consultingRoomDao;
     private ScheduleDao scheduleDao;
-    private RatingDao ratingDao;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public void DoctorService(DoctorDao doctorDao, SpecialtyDao specialtyDao, AppUserDao appUserDao,
-                              ConsultingRoomDao consultingRoomDao, ScheduleDao scheduleDao, RatingDao ratingDao,
+                              ConsultingRoomDao consultingRoomDao, ScheduleDao scheduleDao,
                               BCryptPasswordEncoder bCryptPasswordEncoder){
         this.doctorDao = doctorDao;
         this.specialtyDao = specialtyDao;
         this.appUserDao = appUserDao;
         this.consultingRoomDao = consultingRoomDao;
         this.scheduleDao = scheduleDao;
-        this.ratingDao = ratingDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -164,4 +161,7 @@ public class DoctorService {
         }
     }
 
+    public Doctor findDoctorByDoctorId(int doctor_id) {
+        return doctorDao.findById(doctor_id);
+    }
 }

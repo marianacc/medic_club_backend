@@ -117,4 +117,25 @@ public class DoctorController {
         }
         return objectResponse;
     }
+
+    @RequestMapping(
+            value = "doctor/{doctor_id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ObjectResponse getDoctorByDoctorId(@PathVariable("doctor_id") int doctor_id){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            Doctor doctor = doctorService.findDoctorByDoctorId(doctor_id);
+            if (doctor != null){
+                objectResponse.setData(doctor);
+            } else {
+                objectResponse.setSuccess(false);
+                objectResponse.setStatusMessage("No se encontro doctor con doctor_id = "+doctor_id);
+            }
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
 }

@@ -1,10 +1,13 @@
 package com.Doctor;
 
 import com.AppUser.AppUser;
+import com.Appointment.Appointment;
 import com.ConsultingRoom.ConsultingRoom;
 import com.Specialty.Specialty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Doctor {
@@ -29,8 +32,20 @@ public class Doctor {
     @JoinColumn(name="specialty_id", nullable=false)
     private Specialty specialty;
 
+    @OneToMany(mappedBy="doctor")
+    @JsonIgnore
+    private Set<Appointment> appointments;
+
     // Constructores
     public Doctor() {
+    }
+
+    public Set<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(Set<Appointment> appointments) {
+        this.appointments = appointments;
     }
 
     public Doctor(Integer id) {

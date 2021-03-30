@@ -1,8 +1,11 @@
 package com.Patient;
 
 import com.AppUser.AppUser;
+import com.Appointment.Appointment;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "patient")
@@ -18,8 +21,20 @@ public class Patient {
     @JoinColumn(name = "app_user_id", referencedColumnName = "id")
     private AppUser appUser;
 
+    @OneToMany(mappedBy="patient")
+    @JsonIgnore
+    private Set<Appointment> appointments;
+
     // Constructores
     public Patient() {
+    }
+
+    public Set<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(Set<Appointment> appointments) {
+        this.appointments = appointments;
     }
 
     public Patient(Integer id) {
