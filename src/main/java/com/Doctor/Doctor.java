@@ -4,6 +4,7 @@ import com.AppUser.AppUser;
 import com.Appointment.Appointment;
 import com.ConsultingRoom.ConsultingRoom;
 import com.Specialty.Specialty;
+import com.Transaction.Transaction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -35,6 +36,10 @@ public class Doctor {
     @OneToMany(mappedBy="doctor")
     @JsonIgnore
     private Set<Appointment> appointments;
+
+    @OneToMany(mappedBy="doctor")
+    @JsonIgnore
+    private Set<Transaction> transactions;
 
     // Constructores
     public Doctor() {
@@ -115,5 +120,13 @@ public class Doctor {
 
     public void setSpecialty(Specialty specialty) {
         this.specialty = specialty;
+    }
+
+    public Set<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }

@@ -1,6 +1,10 @@
 package com.Doctor;
 
+import com.ConsultingRoom.ConsultingRoom;
 import com.ObjectResponse.ObjectResponse;
+import com.Schedule.Day;
+import com.Schedule.Schedule;
+import com.Schedule.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +16,12 @@ import java.util.ArrayList;
 public class DoctorController {
 
     private DoctorService doctorService;
+    private ScheduleService scheduleService;
 
     @Autowired
-    public void DoctorController(DoctorService doctorService){
+    public void DoctorController(DoctorService doctorService, ScheduleService scheduleService){
         this.doctorService = doctorService;
+        this.scheduleService = scheduleService;
     }
 
     @RequestMapping(
@@ -132,6 +138,23 @@ public class DoctorController {
                 objectResponse.setSuccess(false);
                 objectResponse.setStatusMessage("No se encontro doctor con doctor_id = "+doctor_id);
             }
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
+
+    @RequestMapping(
+            value = "schedule/days/{doctor_id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ObjectResponse getScheduleByDoctorId(@PathVariable("doctor_id") int doctor_id){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            ConsultingRoom consultingRoom = doctorService.findConsultingRoomByDoctorId(doctor_id);
+            Day days = scheduleService.findDaysByConsultingRoom(consultingRoom);
+            objectResponse.setData(days);
         }catch(Exception e){
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());

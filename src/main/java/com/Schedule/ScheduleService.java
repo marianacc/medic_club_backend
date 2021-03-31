@@ -40,4 +40,33 @@ public class ScheduleService {
             System.out.println("Horario creado para el consultorio con id: " + scheduleModel.getConsulting_room_id());
         }
     }
+
+    public Day findDaysByConsultingRoom(ConsultingRoom consultingRoom){
+        ArrayList<Schedule> schedules = scheduleDao.findAllByConsultingRoomId(consultingRoom.getId());
+        Day day = new Day();
+        for (Schedule schedule: schedules
+             ) {
+            if(schedule.getDay().equals("Lunes"))
+                day.setLunes(true);
+
+            if(schedule.getDay().equals("Martes"))
+                day.setMartes(true);
+
+            if(schedule.getDay().equals("Miercoles"))
+                day.setMiercoles(true);
+
+            if(schedule.getDay().equals("Jueves"))
+                day.setJueves(true);
+
+            if(schedule.getDay().equals("Viernes"))
+                day.setViernes(true);
+
+            if(schedule.getDay().equals("Sabado"))
+                day.setSabado(true);
+
+            if(schedule.getDay().equals("Domingo"))
+                day.setDomingo(true);
+        }
+        return day;
+    }
 }

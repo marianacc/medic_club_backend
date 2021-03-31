@@ -27,7 +27,6 @@ public class Schedule {
     @JsonIgnore
     private Set<ScheduleInterval> scheduleIntervals;
 
-
     // Constructores
     public Schedule() {
     }
@@ -83,5 +82,13 @@ public class Schedule {
 
     public void setConsultingRoom(ConsultingRoom consultingRoom) {
         this.consultingRoom = consultingRoom;
+    }
+
+    public Set<ScheduleInterval> getScheduleIntervals() {
+        return scheduleIntervals;
+    }
+
+    public void setScheduleIntervals(Set<ScheduleInterval> scheduleIntervals) {
+        this.scheduleIntervals = scheduleIntervals;
     }
 }

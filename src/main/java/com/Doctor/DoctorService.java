@@ -4,6 +4,7 @@ import com.AppUser.AppUser;
 import com.AppUser.AppUserDao;
 import com.ConsultingRoom.ConsultingRoom;
 import com.ConsultingRoom.ConsultingRoomDao;
+import com.Interval.ScheduleIntervalService;
 import com.Schedule.Schedule;
 import com.Schedule.ScheduleDao;
 import com.Specialty.SpecialtyDao;
@@ -91,6 +92,7 @@ public class DoctorService {
         schedulesConsultingRoom.clear();
         clearSchedulesFromConsultingRoom(consultingRoom);
 
+        ScheduleIntervalService scheduleIntervalService = new ScheduleIntervalService();
         // Se agregan los nuevos horarios recibidos en el doctor model a la bd
         for (Schedule schedule: doctorModel.getSchedule()
              ) {
@@ -101,6 +103,8 @@ public class DoctorService {
             schedule1.setFinal_hour(schedule.getFinal_hour());
             scheduleDao.save(schedule1);
             schedulesConsultingRoom.add(schedule1);
+
+            scheduleIntervalService.createIntervals(schedule1);
         }
         consultingRoom.setSchedules(schedulesConsultingRoom);
         consultingRoomDao.save(consultingRoom);
@@ -163,5 +167,9 @@ public class DoctorService {
 
     public Doctor findDoctorByDoctorId(int doctor_id) {
         return doctorDao.findById(doctor_id);
+    }
+
+    public ConsultingRoom findConsultingRoomByDoctorId(int doctor_id) {
+        return consultingRoomDao.findByDoctorsId(doctor_id);
     }
 }
