@@ -4,6 +4,8 @@ import com.AppUser.AppUser;
 import com.AppUser.AppUserDao;
 import com.ConsultingRoom.ConsultingRoom;
 import com.ConsultingRoom.ConsultingRoomDao;
+import com.Interval.ScheduleInterval;
+import com.Interval.ScheduleIntervalDao;
 import com.Interval.ScheduleIntervalService;
 import com.Schedule.Schedule;
 import com.Schedule.ScheduleDao;
@@ -27,17 +29,19 @@ public class DoctorService {
     private ConsultingRoomDao consultingRoomDao;
     private ScheduleDao scheduleDao;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private ScheduleIntervalDao scheduleIntervalDao;
 
     @Autowired
     public void DoctorService(DoctorDao doctorDao, SpecialtyDao specialtyDao, AppUserDao appUserDao,
                               ConsultingRoomDao consultingRoomDao, ScheduleDao scheduleDao,
-                              BCryptPasswordEncoder bCryptPasswordEncoder){
+                              BCryptPasswordEncoder bCryptPasswordEncoder, ScheduleIntervalDao scheduleIntervalDao){
         this.doctorDao = doctorDao;
         this.specialtyDao = specialtyDao;
         this.appUserDao = appUserDao;
         this.consultingRoomDao = consultingRoomDao;
         this.scheduleDao = scheduleDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.scheduleIntervalDao = scheduleIntervalDao;
     }
 
     public Boolean save(DoctorModel doctorModel){
@@ -103,8 +107,7 @@ public class DoctorService {
             schedule1.setFinal_hour(schedule.getFinal_hour());
             scheduleDao.save(schedule1);
             schedulesConsultingRoom.add(schedule1);
-
-            scheduleIntervalService.createIntervals(schedule1);
+            createIntervals(schedule1);
         }
         consultingRoom.setSchedules(schedulesConsultingRoom);
         consultingRoomDao.save(consultingRoom);
@@ -171,5 +174,27 @@ public class DoctorService {
 
     public ConsultingRoom findConsultingRoomByDoctorId(int doctor_id) {
         return consultingRoomDao.findByDoctorsId(doctor_id);
+    }
+
+    public void createIntervals(Schedule schedule) {
+        String[] partsInitialHour = schedule.getInitial_hour().split(":");
+        String[] partsFinalHour = schedule.getFinal_hour().split(":");
+
+        int initialHour = Integer.parseInt(partsInitialHour[0]);
+        int initialMinute = Integer.parseInt(partsInitialHour[1]);
+        int finalHour = Integer.parseInt(partsFinalHour[0]);
+        int finalMinute = Integer.parseInt(partsFinalHour[1]);
+
+        double dateAmount = (((finalHour * 60) + finalMinute) - ((initialHour * 60) + initialMinute)) / schedule.getConsultingRoom().getTime_interval();
+
+        int minutes = (initialHour * 60) + initialMinute;
+        for(int i=0; i<dateAmount; i++){
+            ScheduleInterval scheduleInterval = new ScheduleInterval();
+            scheduleInterval.setInitial_hour(minutes/60+":"+minutes%60);
+            minutes+=schedule.getConsultingRoom().getTime_interval();
+            scheduleInterval.setFinal_hour(minutes/60+":"+minutes%60);
+            scheduleInterval.setSchedule(schedule);
+            scheduleIntervalDao.save(scheduleInterval);
+        }
     }
 }

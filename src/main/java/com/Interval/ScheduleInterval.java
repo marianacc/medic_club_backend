@@ -22,6 +22,7 @@ public class ScheduleInterval {
 
     @ManyToOne
     @JoinColumn(name="schedule_id", nullable=false)
+    @JsonIgnore
     private Schedule schedule;
 
     @OneToMany(mappedBy="scheduleInterval")

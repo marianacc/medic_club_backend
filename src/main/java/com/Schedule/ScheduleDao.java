@@ -9,4 +9,6 @@ import java.util.ArrayList;
 public interface ScheduleDao extends JpaRepository<Schedule, Integer> {
     void deleteAllByConsultingRoomId(int id);
     ArrayList<Schedule> findAllByConsultingRoomId(int id);
+    Schedule findByDayAndConsultingRoomId(String day, int id);
+
 }
