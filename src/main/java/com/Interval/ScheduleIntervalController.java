@@ -1,22 +1,29 @@
 package com.Interval;
 
+import com.IntervalTaken.IntervalTakenService;
 import com.ObjectResponse.ObjectResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import com.GlobalVariables.*;
 import java.util.Date;
+
+import static com.GlobalVariables.SCHEDULE_FREE;
+import static com.GlobalVariables.SCHEDULE_OCCUPIED;
 
 @RestController
 @RequestMapping(value = "intervals")
 public class ScheduleIntervalController {
 
     private ScheduleIntervalService scheduleIntervalService;
+    private IntervalTakenService intervalTakenService;
 
     @Autowired
-    public void IntervalController(ScheduleIntervalService scheduleIntervalService){
+    public void IntervalController(ScheduleIntervalService scheduleIntervalService, IntervalTakenService intervalTakenService){
         this.scheduleIntervalService = scheduleIntervalService;
+        this.intervalTakenService = intervalTakenService;
     }
 
     @RequestMapping(
@@ -41,7 +48,6 @@ public class ScheduleIntervalController {
     public ObjectResponse loadSchedulesFromJson(@RequestParam(name = "date") String date, @RequestParam(name = "doctor_id") int doctor_id){
         ObjectResponse objectResponse = new ObjectResponse();
         String dayOfWeek = scheduleIntervalService.getDayOfWeek(date);
-        System.out.println(dayOfWeek);
         try{
             ArrayList<ScheduleInterval> scheduleIntervals = scheduleIntervalService.findAllByScheduleDayAndDoctorId(dayOfWeek, doctor_id);
             ArrayList<ScheduleIntervalModel> scheduleIntervalModels = new ArrayList<>();
@@ -51,8 +57,11 @@ public class ScheduleIntervalController {
                 scheduleIntervalModel.setId(scheduleInterval.getId());
                 scheduleIntervalModel.setFinal_hour(scheduleInterval.getFinal_hour());
                 scheduleIntervalModel.setInitial_hour(scheduleInterval.getInitial_hour());
-                //TODO: Logica para ver si este horario ya esta tomado, si este cumple el caso cambiar el status
-                scheduleIntervalModel.setStatus(1);
+                if(intervalTakenService.findByScheduleIntervalAndDate(scheduleInterval.getId(), date)){
+                    scheduleIntervalModel.setStatus(SCHEDULE_OCCUPIED);
+                }else{
+                    scheduleIntervalModel.setStatus(SCHEDULE_FREE);
+                }
                 scheduleIntervalModels.add(scheduleIntervalModel);
             }
             if (scheduleIntervals != null){
@@ -60,7 +69,7 @@ public class ScheduleIntervalController {
             }
         }catch(Exception e){
             objectResponse.setSuccess(false);
-            objectResponse.setStatusMessage(e.getMessage());
+            objectResponse.setStatusMessage("No existen horarios en este dia.");
         }
         return objectResponse;
     }
