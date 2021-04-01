@@ -11,7 +11,8 @@ public class IntervalTaken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String date, status;
+    private String date;
+    private int status;
 
     @ManyToOne
     @JoinColumn(name="schedule_interval_id", nullable=false)
@@ -44,11 +45,11 @@ public class IntervalTaken {
         this.date = date;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

@@ -14,7 +14,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double amount;
-    private Date date;
+    private String date;
 
     @ManyToOne
     @JoinColumn(name="doctor_id", nullable=false)
@@ -49,11 +49,11 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

@@ -45,7 +45,7 @@ public class ScheduleIntervalController {
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ObjectResponse loadSchedulesFromJson(@RequestParam(name = "date") String date, @RequestParam(name = "doctor_id") int doctor_id){
+    public ObjectResponse findIntervalByDateAndDoctorId(@RequestParam(name = "date") String date, @RequestParam(name = "doctor_id") int doctor_id){
         ObjectResponse objectResponse = new ObjectResponse();
         String dayOfWeek = scheduleIntervalService.getDayOfWeek(date);
         try{

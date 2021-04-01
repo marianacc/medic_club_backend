@@ -6,4 +6,5 @@ import java.util.ArrayList;
 
 public interface ScheduleIntervalDao extends JpaRepository<ScheduleInterval, Integer> {
     ArrayList<ScheduleInterval> findAllByScheduleId(int schedule_id);
+    ScheduleInterval findById(int id);
 }
