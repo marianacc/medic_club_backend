@@ -76,5 +76,51 @@ public class AppointmentController {
         return objectResponse;
     }
 
+    @RequestMapping(
+            value = "doctor/accept_appointment/{appointment_id}",
+            method = RequestMethod.POST)
+    public ObjectResponse acceptAppointment(@PathVariable("appointment_id") int appointment_id){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            String message = appointmentService.acceptAppointment(appointment_id);
+            objectResponse.setSuccess(true);
+            objectResponse.setStatusMessage(message);
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
 
+    @RequestMapping(
+            value = "doctor/decline_appointment/{appointment_id}",
+            method = RequestMethod.POST)
+    public ObjectResponse declineAppointment(@PathVariable("appointment_id") int appointment_id){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            String message = appointmentService.declineAppointment(appointment_id);
+            objectResponse.setSuccess(true);
+            objectResponse.setStatusMessage(message);
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
+
+    @RequestMapping(
+            value = "doctor/end_appointment/{appointment_id}",
+            method = RequestMethod.POST)
+    public ObjectResponse endAppointment(@PathVariable("appointment_id") int appointment_id){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            String message = appointmentService.endAppointment(appointment_id);
+            objectResponse.setSuccess(true);
+            objectResponse.setStatusMessage(message);
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
 }

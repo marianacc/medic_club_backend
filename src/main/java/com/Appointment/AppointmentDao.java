@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public interface AppointmentDao extends JpaRepository<Appointment, Integer> {
     ArrayList<Appointment> findAllByPatientId(int patient_id);
-
     ArrayList<Appointment> findAllByDoctorId(int doctor_id);
+    Appointment findById(int id);
 }

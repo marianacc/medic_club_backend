@@ -92,4 +92,25 @@ public class AppointmentService {
         }
         return appointmentsFilter;
     }
+
+    public String acceptAppointment(int appointment_id) {
+        Appointment appointment = appointmentDao.findById(appointment_id);
+        appointment.setStatus(APPOINTMENT_ACCEPTED);
+        appointmentDao.save(appointment);
+        return "Cita aceptada";
+    }
+
+    public String declineAppointment(int appointment_id) {
+        Appointment appointment = appointmentDao.findById(appointment_id);
+        appointment.setStatus(APPOINTMENT_DECLINED);
+        appointmentDao.save(appointment);
+        return "Cita rechazada";
+    }
+
+    public String endAppointment(int appointment_id) {
+        Appointment appointment = appointmentDao.findById(appointment_id);
+        appointment.setStatus(APPOINTMENT_FINISHED);
+        appointmentDao.save(appointment);
+        return "Cita finalizada";
+    }
 }
