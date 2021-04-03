@@ -14,8 +14,9 @@ import com.Transaction.TransactionModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.GlobalVariables.APPOINTMENT_CREATED;
-import static com.GlobalVariables.APPOINTMENT_ON_HOLD;
+import java.util.ArrayList;
+
+import static com.GlobalVariables.*;
 
 @Service
 public class AppointmentService {
@@ -46,7 +47,7 @@ public class AppointmentService {
         // Crea una cita con el doctor y el paciente
         appointment.setDoctor(doctor);
         appointment.setPatient(patient);
-        appointment.setStatus(APPOINTMENT_CREATED);
+        appointment.setStatus(APPOINTMENT_ON_HOLD);
         appointment.setScore(0);
         appointmentDao.save(appointment);
         // Guarda la transacción
@@ -63,8 +64,38 @@ public class AppointmentService {
         intervalTaken.setAppointment(appointment);
         intervalTaken.setInterval(scheduleInterval);
         intervalTaken.setDate(transactionModel.getDate());
-        intervalTaken.setStatus(APPOINTMENT_ON_HOLD);
         intervalTakenDao.save(intervalTaken);
         return true;
+    }
+
+    public ArrayList<AppointmentModel> findAllByPatientIdAndStatus(int patient_id, int status) {
+        ArrayList<Appointment> appointments = appointmentDao.findAllByPatientId(patient_id);
+        ArrayList<AppointmentModel> appointmentModels = new ArrayList<>();
+
+        for (Appointment appointment : appointments
+             ) {
+            IntervalTaken intervalTaken = intervalTakenDao.findByAppointmentId(appointment.getId());
+            AppointmentModel appointmentModel = new AppointmentModel();
+            appointmentModel.setIntervalTaken(intervalTaken);
+
+            if (status == appointment.getStatus()){
+                appointmentModels.add(appointmentModel);
+            }
+        }
+
+        return appointmentModels;
+    }
+
+    public ArrayList<Appointment> findAllByPatientIdAndStatusNew(int patient_id, int status) {
+        ArrayList<Appointment> appointments = appointmentDao.findAllByPatientId(patient_id);
+        ArrayList<Appointment> appointmentsFilter = new ArrayList<>();
+
+        for (Appointment appointment : appointments
+        ) {
+            if (status == appointment.getStatus()){
+                appointmentsFilter.add(appointment);
+            }
+        }
+        return appointmentsFilter;
     }
 }

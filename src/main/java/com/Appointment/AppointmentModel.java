@@ -1,38 +1,25 @@
 package com.Appointment;
 
+import com.Doctor.Doctor;
+import com.Interval.ScheduleInterval;
+import com.IntervalTaken.IntervalTaken;
+import com.Patient.Patient;
+
+import javax.print.Doc;
+
 public class AppointmentModel {
 
-    private int score, status, id_doctor, id_patient;
+    private IntervalTaken intervalTaken;
 
-    public int getScore() {
-        return score;
+    public IntervalTaken getIntervalTaken() {
+        return intervalTaken;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setIntervalTaken(IntervalTaken intervalTaken) {
+        this.intervalTaken = intervalTaken;
     }
 
-    public int getStatus() {
-        return status;
-    }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
 
-    public int getId_doctor() {
-        return id_doctor;
-    }
 
-    public void setId_doctor(int id_doctor) {
-        this.id_doctor = id_doctor;
-    }
-
-    public int getId_patient() {
-        return id_patient;
-    }
-
-    public void setId_patient(int id_patient) {
-        this.id_patient = id_patient;
-    }
 }

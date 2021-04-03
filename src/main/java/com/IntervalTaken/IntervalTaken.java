@@ -2,6 +2,8 @@ package com.IntervalTaken;
 
 import com.Appointment.Appointment;
 import com.Interval.ScheduleInterval;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -12,14 +14,15 @@ public class IntervalTaken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String date;
-    private int status;
 
     @ManyToOne
     @JoinColumn(name="schedule_interval_id", nullable=false)
+    @JsonBackReference
     private ScheduleInterval scheduleInterval;
 
     @ManyToOne
     @JoinColumn(name="appointment_id", nullable=false)
+    @JsonBackReference
     private Appointment appointment;
 
     public IntervalTaken(Integer id) {
@@ -43,14 +46,6 @@ public class IntervalTaken {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public ScheduleInterval getInterval() {

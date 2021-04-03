@@ -5,6 +5,7 @@ import com.Appointment.Appointment;
 import com.ConsultingRoom.ConsultingRoom;
 import com.Specialty.Specialty;
 import com.Transaction.Transaction;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -27,6 +28,7 @@ public class Doctor {
 
     @ManyToOne
     @JoinColumn(name="consulting_room_id", nullable=true)
+    @JsonBackReference
     private ConsultingRoom consultingRoom;
 
     @ManyToOne
@@ -34,11 +36,11 @@ public class Doctor {
     private Specialty specialty;
 
     @OneToMany(mappedBy="doctor")
-    @JsonIgnore
+    @JsonBackReference
     private Set<Appointment> appointments;
 
     @OneToMany(mappedBy="doctor")
-    @JsonIgnore
+    @JsonBackReference
     private Set<Transaction> transactions;
 
     // Constructores

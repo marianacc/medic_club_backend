@@ -14,6 +14,7 @@ public class IntervalTakenService {
 
     public boolean findByScheduleIntervalAndDate(Integer id, String date) {
         IntervalTaken intervalTaken = intervalTakenDao.findByScheduleIntervalIdAndDate(id, date);
+        System.out.println(intervalTaken);
         if (intervalTaken != null){
             return true;
         }

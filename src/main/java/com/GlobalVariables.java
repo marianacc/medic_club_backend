@@ -11,7 +11,8 @@ public class GlobalVariables {
     public static final int APPOINTMENT_ON_HOLD = 0;
     public static final int APPOINTMENT_ACCEPTED = 1;
     public static final int APPOINTMENT_DECLINED = 2;
-    public static final int APPOINTMENT_CREATED = 0;
-    public static final int APPOINTMENT_IN_PROGRESS = 1;
-    public static final int APPOINTMENT_FINISHED = 2;
+    public static final int APPOINTMENT_FINISHED = 3;
+
+    //public static final int APPOINTMENT_CREATED = 10;
+    //public static final int APPOINTMENT_IN_PROGRESS = 11;
 }

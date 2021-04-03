@@ -5,6 +5,7 @@ import com.Doctor.Doctor;
 import com.IntervalTaken.IntervalTaken;
 import com.Patient.Patient;
 import com.Specialty.Specialty;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -27,7 +28,6 @@ public class Appointment {
     private Patient patient;
 
     @OneToMany(mappedBy="appointment")
-    @JsonIgnore
     private Set<IntervalTaken> intervalTakens;
 
 
