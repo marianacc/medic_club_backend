@@ -68,28 +68,22 @@ public class AppointmentService {
         return true;
     }
 
-    public ArrayList<AppointmentModel> findAllByPatientIdAndStatus(int patient_id, int status) {
-        ArrayList<Appointment> appointments = appointmentDao.findAllByPatientId(patient_id);
-        ArrayList<AppointmentModel> appointmentModels = new ArrayList<>();
-
-        for (Appointment appointment : appointments
-             ) {
-            IntervalTaken intervalTaken = intervalTakenDao.findByAppointmentId(appointment.getId());
-            AppointmentModel appointmentModel = new AppointmentModel();
-            appointmentModel.setIntervalTaken(intervalTaken);
-
-            if (status == appointment.getStatus()){
-                appointmentModels.add(appointmentModel);
-            }
-        }
-
-        return appointmentModels;
-    }
-
-    public ArrayList<Appointment> findAllByPatientIdAndStatusNew(int patient_id, int status) {
+    public ArrayList<Appointment> findAllByPatientIdAndStatus(int patient_id, int status) {
         ArrayList<Appointment> appointments = appointmentDao.findAllByPatientId(patient_id);
         ArrayList<Appointment> appointmentsFilter = new ArrayList<>();
 
+        for (Appointment appointment : appointments
+        ) {
+            if (status == appointment.getStatus()){
+                appointmentsFilter.add(appointment);
+            }
+        }
+        return appointmentsFilter;
+    }
+
+    public ArrayList<Appointment> findAllByDoctorIdAndStatus(int doctor_id, int status) {
+        ArrayList<Appointment> appointments = appointmentDao.findAllByDoctorId(doctor_id);
+        ArrayList<Appointment> appointmentsFilter = new ArrayList<>();
         for (Appointment appointment : appointments
         ) {
             if (status == appointment.getStatus()){

@@ -45,8 +45,26 @@ public class AppointmentController {
     public ObjectResponse findAllByPatientIdAndStatus(@RequestParam(name = "patient_id") int patient_id, @RequestParam(name = "status") int status){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
-            //ArrayList<AppointmentModel> appointments = appointmentService.findAllByPatientIdAndStatus(patient_id, status);
-            ArrayList<Appointment> appointments = appointmentService.findAllByPatientIdAndStatusNew(patient_id,status);
+            ArrayList<Appointment> appointments = appointmentService.findAllByPatientIdAndStatus(patient_id,status);
+            if (appointments != null){
+                objectResponse.setSuccess(true);
+                objectResponse.setData(appointments);
+            }
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
+
+    @RequestMapping(
+            value = "doctor",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ObjectResponse findAllByDoctorIdAndStatus(@RequestParam(name = "doctor_id") int doctor_id, @RequestParam(name = "status") int status){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            ArrayList<Appointment> appointments = appointmentService.findAllByDoctorIdAndStatus(doctor_id,status);
             if (appointments != null){
                 objectResponse.setSuccess(true);
                 objectResponse.setData(appointments);
