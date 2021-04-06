@@ -40,19 +40,19 @@ public class ScheduleIntervalService {
     }
 
     public String getDayOfWeek(String date) {
-        if (LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")).getDayOfWeek().name().equals("MONDAY"))
+        if (LocalDate.parse(date, DateTimeFormatter.ofPattern("d/M/yyyy")).getDayOfWeek().name().equals("MONDAY"))
             return "Lunes";
-        else if (LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")).getDayOfWeek().name().equals("TUESDAY"))
+        else if (LocalDate.parse(date, DateTimeFormatter.ofPattern("d/M/yyyy")).getDayOfWeek().name().equals("TUESDAY"))
             return "Martes";
-        else if (LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")).getDayOfWeek().name().equals("WEDNESDAY"))
+        else if (LocalDate.parse(date, DateTimeFormatter.ofPattern("d/M/yyyy")).getDayOfWeek().name().equals("WEDNESDAY"))
             return "Miercoles";
-        else if (LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")).getDayOfWeek().name().equals("THURSDAY"))
+        else if (LocalDate.parse(date, DateTimeFormatter.ofPattern("d/M/yyyy")).getDayOfWeek().name().equals("THURSDAY"))
             return "Jueves";
-        else if (LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")).getDayOfWeek().name().equals("FRIDAY"))
+        else if (LocalDate.parse(date, DateTimeFormatter.ofPattern("d/M/yyyy")).getDayOfWeek().name().equals("FRIDAY"))
             return "Viernes";
-        else if (LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")).getDayOfWeek().name().equals("SATURDAY"))
+        else if (LocalDate.parse(date, DateTimeFormatter.ofPattern("d/M/yyyy")).getDayOfWeek().name().equals("SATURDAY"))
             return "Sabado";
-        else if (LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")).getDayOfWeek().name().equals("SUNDAY"))
+        else if (LocalDate.parse(date, DateTimeFormatter.ofPattern("d/M/yyyy")).getDayOfWeek().name().equals("SUNDAY"))
             return "Domingo";
         return null;
     }
