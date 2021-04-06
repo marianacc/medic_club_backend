@@ -45,7 +45,7 @@ public class AppointmentController {
     public ObjectResponse findAllByPatientIdAndStatus(@RequestParam(name = "patient_id") int patient_id, @RequestParam(name = "status") int status){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
-            ArrayList<Appointment> appointments = appointmentService.findAllByPatientIdAndStatus(patient_id,status);
+            ArrayList<AppointmentModel> appointments = appointmentService.findAllByPatientIdAndStatus(patient_id,status);
             if (appointments != null){
                 objectResponse.setSuccess(true);
                 objectResponse.setData(appointments);
@@ -64,7 +64,7 @@ public class AppointmentController {
     public ObjectResponse findAllByDoctorIdAndStatus(@RequestParam(name = "doctor_id") int doctor_id, @RequestParam(name = "status") int status){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
-            ArrayList<Appointment> appointments = appointmentService.findAllByDoctorIdAndStatus(doctor_id,status);
+            ArrayList<AppointmentModel> appointments = appointmentService.findAllByDoctorIdAndStatus(doctor_id,status);
             if (appointments != null){
                 objectResponse.setSuccess(true);
                 objectResponse.setData(appointments);

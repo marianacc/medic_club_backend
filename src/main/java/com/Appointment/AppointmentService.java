@@ -68,29 +68,55 @@ public class AppointmentService {
         return true;
     }
 
-    public ArrayList<Appointment> findAllByPatientIdAndStatus(int patient_id, int status) {
+    /*public ArrayList<Appointment> findAllByPatientIdAndStatus(int patient_id, int status) {
         ArrayList<Appointment> appointments = appointmentDao.findAllByPatientId(patient_id);
         ArrayList<Appointment> appointmentsFilter = new ArrayList<>();
+        ArrayList<AppointmentModel> appointmentsModels = new ArrayList<>();
 
         for (Appointment appointment : appointments
         ) {
+            AppointmentModel appointmentModel = new AppointmentModel();
             if (status == appointment.getStatus()){
+                appointmentModel.setPatient_id(appointment.getPatient().getId());
+                appointmentModel.setDoctor_id(appointment.getDoctor().getId());
+                appointmentModel.setIntervalTakens(appointment.getIntervalTakens());
+                appointmentModel.setId(appointment.getId());
+                appointmentModel.setStatus(appointment.getStatus());
+                appointmentModel.setScore(appointment.getScore());
+                appointmentsModels.add(appointmentModel);
                 appointmentsFilter.add(appointment);
             }
         }
         return appointmentsFilter;
+    }*/
+
+    public ArrayList<AppointmentModel> findAllByPatientIdAndStatus(int patient_id, int status) {
+        ArrayList<Appointment> appointments = appointmentDao.findAllByPatientId(patient_id);
+        return getAppointmentsModels(appointments, status);
     }
 
-    public ArrayList<Appointment> findAllByDoctorIdAndStatus(int doctor_id, int status) {
+
+    public ArrayList<AppointmentModel> findAllByDoctorIdAndStatus(int doctor_id, int status) {
         ArrayList<Appointment> appointments = appointmentDao.findAllByDoctorId(doctor_id);
-        ArrayList<Appointment> appointmentsFilter = new ArrayList<>();
+        return getAppointmentsModels(appointments, status);
+    }
+
+    public ArrayList<AppointmentModel> getAppointmentsModels(ArrayList<Appointment> appointments, int status){
+        ArrayList<AppointmentModel> appointmentsModels = new ArrayList<>();
         for (Appointment appointment : appointments
         ) {
+            AppointmentModel appointmentModel = new AppointmentModel();
             if (status == appointment.getStatus()){
-                appointmentsFilter.add(appointment);
+                appointmentModel.setPatient_id(appointment.getPatient().getId());
+                appointmentModel.setDoctor_id(appointment.getDoctor().getId());
+                appointmentModel.setIntervalTakens(appointment.getIntervalTakens());
+                appointmentModel.setId(appointment.getId());
+                appointmentModel.setStatus(appointment.getStatus());
+                appointmentModel.setScore(appointment.getScore());
+                appointmentsModels.add(appointmentModel);
             }
         }
-        return appointmentsFilter;
+        return appointmentsModels;
     }
 
     public String acceptAppointment(int appointment_id) {

@@ -57,4 +57,8 @@ public class PatientService {
             }
         }
     }
+
+    public Patient findPatientByPatientId(int patient_id) {
+        return patientDao.findById(patient_id);
+    }
 }
