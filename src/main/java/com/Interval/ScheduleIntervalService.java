@@ -26,9 +26,9 @@ public class ScheduleIntervalService {
     @Autowired
     public void ScheduleIntervalService (ScheduleIntervalDao scheduleIntervalDao, ScheduleDao scheduleDao, ConsultingRoomDao consultingRoomDao) {this.scheduleIntervalDao = scheduleIntervalDao; this.scheduleDao = scheduleDao; this.consultingRoomDao = consultingRoomDao;}
 
-        public ArrayList<ScheduleInterval> findByScheduleId(int schedule_id) {
-            return scheduleIntervalDao.findAllByScheduleId(schedule_id);
-        }
+    public ArrayList<ScheduleInterval> findByScheduleId(int schedule_id) {
+        return scheduleIntervalDao.findAllByScheduleId(schedule_id);
+    }
 
     public ArrayList<ScheduleInterval> findAllByScheduleDayAndDoctorId(String day, int doctor_id) {
         ConsultingRoom consultingRoom = consultingRoomDao.findByDoctorsId(doctor_id);

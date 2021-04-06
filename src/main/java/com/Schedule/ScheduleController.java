@@ -35,5 +35,4 @@ public class ScheduleController {
         }
         return objectResponse;
     }
-
 }
