@@ -12,8 +12,8 @@ public class IntervalTakenService {
     @Autowired
     public void IntervalTakenService (IntervalTakenDao intervalTakenDao){this.intervalTakenDao = intervalTakenDao;}
 
-    public boolean findByScheduleIntervalAndDate(Integer id, String date) {
-        IntervalTaken intervalTaken = intervalTakenDao.findByScheduleIntervalIdAndDate(id, date);
+    public boolean findByScheduleIntervalAndDate(Integer id, String date,int status) {
+        IntervalTaken intervalTaken = intervalTakenDao.findByScheduleIntervalIdAndDateAndAppointmentStatus(id, date,status);
         System.out.println(intervalTaken);
         if (intervalTaken != null){
             return true;

@@ -57,7 +57,7 @@ public class ScheduleIntervalController {
                 scheduleIntervalModel.setId(scheduleInterval.getId());
                 scheduleIntervalModel.setFinal_hour(scheduleInterval.getFinal_hour());
                 scheduleIntervalModel.setInitial_hour(scheduleInterval.getInitial_hour());
-                if(intervalTakenService.findByScheduleIntervalAndDate(scheduleInterval.getId(), date)){
+                if(intervalTakenService.findByScheduleIntervalAndDate(scheduleInterval.getId(), date,1)){
                     scheduleIntervalModel.setStatus(SCHEDULE_OCCUPIED);
                 }else{
                     scheduleIntervalModel.setStatus(SCHEDULE_FREE);
