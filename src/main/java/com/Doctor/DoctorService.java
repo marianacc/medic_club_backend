@@ -197,4 +197,12 @@ public class DoctorService {
             scheduleIntervalDao.save(scheduleInterval);
         }
     }
+
+    public void updateProfile(int doctor_id, DoctorModel doctorModel) {
+        Doctor doctor = doctorDao.findById(doctor_id);
+        doctor.setPhone_number(doctorModel.getPhone_number());
+        doctor.setBio(doctorModel.getBio());
+        doctor.setPricing(doctorModel.getPricing());
+        doctorDao.save(doctor);
+    }
 }

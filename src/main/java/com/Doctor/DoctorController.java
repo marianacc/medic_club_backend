@@ -161,4 +161,21 @@ public class DoctorController {
         }
         return objectResponse;
     }
+
+    @RequestMapping(
+            value = "update/profile/{doctor_id}",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ObjectResponse updateProfileByDoctorId(@PathVariable("doctor_id") int doctor_id, @RequestBody DoctorModel doctorModel){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            doctorService.updateProfile(doctor_id, doctorModel);
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
+
+
 }
