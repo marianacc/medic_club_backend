@@ -9,7 +9,7 @@ public class PatientModel {
     private String first_name;
     private String last_name;
     private String genre;
-    private Date birth_date;
+    private String birth_date;
     private String photo_url;
     private String weight;
     private String height;
@@ -53,11 +53,11 @@ public class PatientModel {
         this.genre = genre;
     }
 
-    public Date getBirth_date() {
+    public String getBirth_date() {
         return birth_date;
     }
 
-    public void setBirth_date(Date birth_date) {
+    public void setBirth_date(String birth_date) {
         this.birth_date = birth_date;
     }
 

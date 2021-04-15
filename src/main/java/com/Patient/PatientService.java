@@ -61,4 +61,17 @@ public class PatientService {
     public Patient findPatientByPatientId(int patient_id) {
         return patientDao.findById(patient_id);
     }
+
+    public void update(int patient_id, PatientModel patientModel) {
+        AppUser appUser = appUserDao.findByPatientId(patient_id);
+        appUser.setFirst_name(patientModel.getFirst_name());
+        appUser.setLast_name(patientModel.getLast_name());
+        appUser.setBirth_date(patientModel.getBirth_date());
+        appUser.setGenre(patientModel.getGenre());
+        appUserDao.save(appUser);
+        Patient patient = patientDao.findById(patient_id);
+        patient.setWeight(patientModel.getWeight());
+        patient.setHeight(patientModel.getHeight());
+        patientDao.save(patient);
+    }
 }

@@ -1,6 +1,7 @@
 package com.Patient;
 
 import com.Doctor.Doctor;
+import com.Doctor.DoctorModel;
 import com.ObjectResponse.ObjectResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -95,4 +96,18 @@ public class PatientController {
         return objectResponse;
     }
 
+    @RequestMapping(
+            value = "update/{patient_id}",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ObjectResponse updatePatientInformation(@PathVariable("patient_id") int patient_id, @RequestBody PatientModel patientModel){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            patientService.update(patient_id, patientModel);
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
 }
