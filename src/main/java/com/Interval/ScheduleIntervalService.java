@@ -27,14 +27,14 @@ public class ScheduleIntervalService {
     public void ScheduleIntervalService (ScheduleIntervalDao scheduleIntervalDao, ScheduleDao scheduleDao, ConsultingRoomDao consultingRoomDao) {this.scheduleIntervalDao = scheduleIntervalDao; this.scheduleDao = scheduleDao; this.consultingRoomDao = consultingRoomDao;}
 
     public ArrayList<ScheduleInterval> findByScheduleId(int schedule_id) {
-        return scheduleIntervalDao.findAllByScheduleId(schedule_id);
+        return scheduleIntervalDao.findAllByScheduleIdOrderByIdAsc(schedule_id);
     }
 
     public ArrayList<ScheduleInterval> findAllByScheduleDayAndDoctorId(String day, int doctor_id) {
         ConsultingRoom consultingRoom = consultingRoomDao.findByDoctorsId(doctor_id);
         Schedule schedule = scheduleDao.findByDayAndConsultingRoomId(day, consultingRoom.getId());
         if (schedule != null){
-            return scheduleIntervalDao.findAllByScheduleId(schedule.getId());
+            return scheduleIntervalDao.findAllByScheduleIdOrderByIdAsc(schedule.getId());
         }
         return null;
     }

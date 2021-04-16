@@ -117,6 +117,13 @@ public class DoctorService {
     }
 
     private void clearSchedulesFromConsultingRoom(ConsultingRoom consultingRoom) {
+        ArrayList<Schedule> schedulesList = scheduleDao.findAllByConsultingRoomId(consultingRoom.getId());
+        if(schedulesList != null){
+            for (Schedule schedule: schedulesList
+            ) {
+                scheduleIntervalDao.deleteAllByScheduleId(schedule.getId());
+            }
+        }
         scheduleDao.deleteAllByConsultingRoomId(consultingRoom.getId());
         System.out.println("Horarios borrados con exito");
     }
@@ -198,11 +205,38 @@ public class DoctorService {
         }
     }
 
-    public void updateProfile(int doctor_id, DoctorModel doctorModel) {
+    public void updateProfessionalProfile(int doctor_id, DoctorModel doctorModel) {
         Doctor doctor = doctorDao.findById(doctor_id);
         doctor.setPhone_number(doctorModel.getPhone_number());
         doctor.setBio(doctorModel.getBio());
         doctor.setPricing(doctorModel.getPricing());
         doctorDao.save(doctor);
+    }
+
+    public void updateSchedule(int doctor_id, DoctorModel doctorModel){
+        Doctor doctor = doctorDao.findById(doctor_id);
+        ConsultingRoom consultingRoom = consultingRoomDao.findByDoctorsId(doctor.getId());
+        consultingRoom.setTime_interval(doctorModel.getTime_interval());
+        consultingRoomDao.save(consultingRoom);
+
+        // Se vacia la lista de horarios existentes en la base de datos con el id del consultorio a actualizar
+        Set<Schedule> schedulesConsultingRoom = consultingRoom.getSchedules();
+        schedulesConsultingRoom.clear();
+        clearSchedulesFromConsultingRoom(consultingRoom);
+
+        // Se agregan los nuevos horarios recibidos en el doctor model a la bd
+        for (Schedule schedule: doctorModel.getSchedule()
+        ) {
+            Schedule schedule1 = new Schedule();
+            schedule1.setConsultingRoom(consultingRoom);
+            schedule1.setDay(schedule.getDay());
+            schedule1.setInitial_hour(schedule.getInitial_hour());
+            schedule1.setFinal_hour(schedule.getFinal_hour());
+            scheduleDao.save(schedule1);
+            schedulesConsultingRoom.add(schedule1);
+            createIntervals(schedule1);
+        }
+        consultingRoom.setSchedules(schedulesConsultingRoom);
+        consultingRoomDao.save(consultingRoom);
     }
 }

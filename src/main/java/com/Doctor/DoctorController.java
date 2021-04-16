@@ -169,7 +169,7 @@ public class DoctorController {
     public ObjectResponse updateProfileByDoctorId(@PathVariable("doctor_id") int doctor_id, @RequestBody DoctorModel doctorModel){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
-            doctorService.updateProfile(doctor_id, doctorModel);
+            doctorService.updateProfessionalProfile(doctor_id, doctorModel);
         }catch(Exception e){
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());
@@ -177,5 +177,18 @@ public class DoctorController {
         return objectResponse;
     }
 
-
+    @RequestMapping(
+            value = "update/schedule/{doctor_id}",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ObjectResponse updateScheduleByDoctorId(@PathVariable("doctor_id") int doctor_id, @RequestBody DoctorModel doctorModel){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            doctorService.updateSchedule(doctor_id, doctorModel);
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
 }
