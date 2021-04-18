@@ -123,4 +123,20 @@ public class AppointmentController {
         }
         return objectResponse;
     }
+
+    @RequestMapping(
+            value = "patient/cancel_appointment/{appointment_id}",
+            method = RequestMethod.POST)
+    public ObjectResponse cancelAppointment(@PathVariable("appointment_id") int appointment_id){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            String message = appointmentService.cancelAppointment(appointment_id);
+            objectResponse.setSuccess(true);
+            objectResponse.setStatusMessage(message);
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
 }

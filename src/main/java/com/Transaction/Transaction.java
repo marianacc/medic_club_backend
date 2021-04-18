@@ -1,5 +1,6 @@
 package com.Transaction;
 
+import com.Appointment.Appointment;
 import com.Doctor.Doctor;
 import com.Patient.Patient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,7 +27,20 @@ public class Transaction {
     @JsonIgnore
     private Patient patient;
 
+    @ManyToOne
+    @JoinColumn(name="appointment_id", nullable=false)
+    @JsonIgnore
+    private Appointment appointment;
+
     public Transaction() {
+    }
+
+    public Appointment getAppointment() {
+        return appointment;
+    }
+
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
     }
 
     public Transaction(Integer id) {

@@ -11,13 +11,16 @@ import com.Patient.PatientDao;
 import com.Transaction.Transaction;
 import com.Transaction.TransactionDao;
 import com.Transaction.TransactionModel;
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 
 import static com.GlobalVariables.*;
 
+@Transactional
 @Service
 public class AppointmentService {
 
@@ -56,6 +59,7 @@ public class AppointmentService {
         transaction.setDate(transactionModel.getDate());
         transaction.setPatient(patient);
         transaction.setDoctor(doctor);
+        transaction.setAppointment(appointment);
         transactionDao.save(transaction);
         // Encuentra el intervalo que devuelve el modelo
         ScheduleInterval scheduleInterval = scheduleIntervalDao.findById(transactionModel.getId_interval());
@@ -107,6 +111,7 @@ public class AppointmentService {
         Appointment appointment = appointmentDao.findById(appointment_id);
         appointment.setStatus(APPOINTMENT_DECLINED);
         appointmentDao.save(appointment);
+        deleteAppointmentInfoBD(appointment);
         return "Cita rechazada";
     }
 
@@ -116,4 +121,21 @@ public class AppointmentService {
         appointmentDao.save(appointment);
         return "Cita finalizada";
     }
+
+    public String cancelAppointment(int appointment_id) {
+        Appointment appointment = appointmentDao.findById(appointment_id);
+        deleteAppointmentInfoBD(appointment);
+        appointmentDao.delete(appointment);
+        return "Cita cancelada con exito";
+    }
+
+    public void deleteAppointmentInfoBD(Appointment appointment){
+
+        IntervalTaken intervalTaken = intervalTakenDao.findByAppointmentId(appointment.getId());
+        intervalTakenDao.delete(intervalTaken);
+
+        Transaction transaction = transactionDao.findByAppointmentId(appointment.getId());
+        transactionDao.delete(transaction);
+    }
+
 }
