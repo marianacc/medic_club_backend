@@ -153,6 +153,18 @@ public class AppointmentService {
         Appointment appointment = appointmentDao.findById(appointment_id);
         appointment.setScore(score);
         appointmentDao.save(appointment);
+        getDoctorRating(appointment_id);
         return "Cita calificada con exito";
     }
+
+    private void getDoctorRating(int appointment_id) {
+        Appointment appointment = appointmentDao.findById(appointment_id);
+        int doctor_id = appointment.getDoctor().getId();
+        Doctor doctor = doctorDao.findById(doctor_id);
+        doctor.setScore(appointmentDao.getRatingDoctor(doctor_id));
+        doctorDao.save(doctor);
+        System.out.println("Doctor calificado correctamente\nNuevo score: " + appointmentDao.getRatingDoctor(doctor_id));
+    }
+
+
 }

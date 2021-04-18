@@ -1,6 +1,7 @@
 package com.Doctor;
 
 import com.AppUser.AppUser;
+import com.Appointment.Appointment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.ArrayList;
