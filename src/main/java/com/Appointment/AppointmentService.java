@@ -149,4 +149,10 @@ public class AppointmentService {
         transactionDao.delete(transaction);
     }
 
+    public String rateAppointment(int appointment_id, int score) {
+        Appointment appointment = appointmentDao.findById(appointment_id);
+        appointment.setScore(score);
+        appointmentDao.save(appointment);
+        return "Cita calificada con exito";
+    }
 }

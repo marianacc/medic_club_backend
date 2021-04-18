@@ -139,4 +139,21 @@ public class AppointmentController {
         }
         return objectResponse;
     }
+
+    @RequestMapping(
+            value = "patient/rate_appointment",
+            method = RequestMethod.PUT)
+    public ObjectResponse rateAppointment(@RequestParam(name = "appointment_id") int appointment_id, @RequestParam(name = "score") int score){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            String message = appointmentService.rateAppointment(appointment_id, score);
+            objectResponse.setSuccess(true);
+            objectResponse.setStatusMessage(message);
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
+
 }
