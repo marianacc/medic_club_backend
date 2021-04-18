@@ -103,6 +103,17 @@ public class AppointmentService {
     public String acceptAppointment(int appointment_id) {
         Appointment appointment = appointmentDao.findById(appointment_id);
         appointment.setStatus(APPOINTMENT_ACCEPTED);
+
+        IntervalTaken intervalTaken = intervalTakenDao.findByAppointmentId(appointment_id);
+
+        ArrayList<IntervalTaken> intervalTakens = intervalTakenDao.findByScheduleIntervalIdAndDate(intervalTaken.getInterval().getId(), intervalTaken.getDate());
+        for (IntervalTaken it : intervalTakens
+             ) {
+            if (it.getAppointment().getStatus() != 1){
+                it.getAppointment().setStatus(APPOINTMENT_DECLINED);
+                deleteAppointmentInfoBD(it.getAppointment());
+            }
+        }
         appointmentDao.save(appointment);
         return "Cita aceptada";
     }
