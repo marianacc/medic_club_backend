@@ -130,6 +130,10 @@ public class AppointmentService {
         Appointment appointment = appointmentDao.findById(appointment_id);
         appointment.setStatus(APPOINTMENT_FINISHED);
         appointmentDao.save(appointment);
+        int doctor_id = appointment.getDoctor().getId();
+        Doctor doctor = doctorDao.findById(doctor_id);
+        doctor.setTotalPatientsAttended(doctor.getTotalPatientsAttended()+1);
+        doctorDao.save(doctor);
         return "Cita finalizada";
     }
 
@@ -165,6 +169,4 @@ public class AppointmentService {
         doctorDao.save(doctor);
         System.out.println("Doctor calificado correctamente\nNuevo score: " + appointmentDao.getRatingDoctor(doctor_id));
     }
-
-
 }

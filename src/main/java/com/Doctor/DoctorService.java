@@ -57,6 +57,7 @@ public class DoctorService {
             doctor.setSpecialty(specialtyDao.findById(doctorModel.getId_specialty()));
             doctor.setScore(doctorModel.getScore());
             doctor.setAppUser(appUser);
+            doctor.setTotalPatientsAttended(0);
             // Se crea un consultorio vacio y se inserta al doctor en este
             ConsultingRoom consultingRoom = new ConsultingRoom();
             consultingRoomDao.save(consultingRoom);

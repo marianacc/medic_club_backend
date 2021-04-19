@@ -26,6 +26,15 @@ public class DoctorModel {
     private ArrayList<Schedule> schedule;
     private String role;
     private int status;
+    private int totalPatientsAttended;
+
+    public int getTotalPatientsAttended() {
+        return totalPatientsAttended;
+    }
+
+    public void setTotalPatientsAttended(int totalPatientsAttended) {
+        this.totalPatientsAttended = totalPatientsAttended;
+    }
 
     public int getStatus() {
         return status;

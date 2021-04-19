@@ -21,6 +21,7 @@ public class Doctor {
     private Double pricing;
     private Double score;
     private String phone_number;
+    private int totalPatientsAttended;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "app_user_id", referencedColumnName = "id")
@@ -59,6 +60,16 @@ public class Doctor {
     }
 
     // Getters y setters
+
+
+    public int getTotalPatientsAttended() {
+        return totalPatientsAttended;
+    }
+
+    public void setTotalPatientsAttended(int totalPatientsAttended) {
+        this.totalPatientsAttended = totalPatientsAttended;
+    }
+
     public Integer getId() {
         return id;
     }
