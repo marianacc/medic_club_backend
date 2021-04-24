@@ -16,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.GlobalVariables.*;
 
@@ -43,7 +46,7 @@ public class AppointmentService {
         this.intervalTakenDao = intervalTakenDao;
     }
 
-    public Boolean createAppointment(TransactionModel transactionModel) {
+    public Boolean createAppointment(TransactionModel transactionModel) throws ParseException {
         Appointment appointment = new Appointment();
         Doctor doctor = doctorDao.findById(transactionModel.getId_doctor());
         Patient patient = patientDao.findById(transactionModel.getId_patient());
@@ -56,7 +59,7 @@ public class AppointmentService {
         // Guarda la transacción
         Transaction transaction = new Transaction();
         transaction.setAmount(transactionModel.getAmount());
-        transaction.setDate(transactionModel.getDate());
+        transaction.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(transactionModel.getDate()));
         transaction.setPatient(patient);
         transaction.setDoctor(doctor);
         transaction.setAppointment(appointment);
