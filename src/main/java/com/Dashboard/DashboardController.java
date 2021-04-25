@@ -42,4 +42,19 @@ public class DashboardController {
         return objectResponse;
     }
 
+    @RequestMapping(
+            value = "/income_category_month",
+            method = RequestMethod.GET)
+    public ObjectResponse incomeByCategoryAndMonths(){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            ArrayList<IncomeByCategoryAndMonth> incomeByCategoryAndMonths = dashboardService.getIncomeByCategoriesAndMonths();
+            objectResponse.setData(incomeByCategoryAndMonths);
+            objectResponse.setSuccess(true);
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
 }

@@ -40,4 +40,84 @@ public class DashboardService {
         return incomeByCategories;
     }
 
+    public ArrayList<IncomeByCategoryAndMonth> getIncomeByCategoriesAndMonths() {
+        ArrayList<IncomeByCategoryAndMonth> incomeByCategoryAndMonths = new ArrayList<>();
+        ArrayList<Specialty> specialties = (ArrayList<Specialty>) specialtyDao.findAll();
+
+        for (Specialty specialty : specialties
+        ) {
+            IncomeByCategoryAndMonth incomeByCategoryAndMonth = new IncomeByCategoryAndMonth();
+            incomeByCategoryAndMonth.setCategory(specialty.getName());
+            ArrayList<IncomeByMonth> incomeByMonths = new ArrayList<>();
+            for(int i = 1; i<=12; i++){
+                IncomeByMonth incomeByMonth = new IncomeByMonth();
+                if (i == 1){
+                    incomeByMonth.setMonth("Enero");
+                    incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
+                }
+
+                if (i == 2){
+                    incomeByMonth.setMonth("Febrero");
+                    incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
+                }
+
+                if (i == 3){
+                    incomeByMonth.setMonth("Marzo");
+                    incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
+                }
+
+                if (i == 4){
+                    incomeByMonth.setMonth("Abril");
+                    incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
+                }
+
+                if (i == 5){
+                    incomeByMonth.setMonth("Mayo");
+                    incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
+                }
+
+                if (i == 6){
+                    incomeByMonth.setMonth("Junio");
+                    //incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
+                }
+
+                if (i == 7){
+                    incomeByMonth.setMonth("Julio");
+                    incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
+                }
+
+                if (i == 8){
+                    incomeByMonth.setMonth("Agosto");
+                    incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
+                }
+
+                if (i == 9){
+                    incomeByMonth.setMonth("Septiembre");
+                    incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
+                }
+
+                if (i == 10){
+                    incomeByMonth.setMonth("Octubre");
+                    incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
+                }
+
+                if (i == 11){
+                    incomeByMonth.setMonth("Noviembre");
+                    incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
+                }
+
+                if (i == 12){
+                    incomeByMonth.setMonth("Diciembre");
+                    incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
+                }
+
+                if(incomeByMonth.getAmount() != null)
+                    incomeByMonths.add(incomeByMonth);
+
+            }
+            incomeByCategoryAndMonth.setIncomeByMonths(incomeByMonths);
+            incomeByCategoryAndMonths.add(incomeByCategoryAndMonth);
+        }
+        return incomeByCategoryAndMonths;
+    }
 }

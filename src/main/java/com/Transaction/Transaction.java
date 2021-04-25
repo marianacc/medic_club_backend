@@ -15,7 +15,9 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double amount;
-    private Date date;
+    private int day;
+    private int month;
+    private int year;
 
     @ManyToOne
     @JoinColumn(name="doctor_id", nullable=false)
@@ -63,14 +65,6 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public Doctor getDoctor() {
         return doctor;
     }
@@ -85,5 +79,29 @@ public class Transaction {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 }

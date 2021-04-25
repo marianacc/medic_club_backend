@@ -59,7 +59,10 @@ public class AppointmentService {
         // Guarda la transacción
         Transaction transaction = new Transaction();
         transaction.setAmount(transactionModel.getAmount());
-        transaction.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(transactionModel.getDate()));
+        String [] date = transactionModel.getDate().split("/");
+        transaction.setDay(Integer.parseInt(date[0]));
+        transaction.setMonth(Integer.parseInt(date[1]));
+        transaction.setYear(Integer.parseInt(date[2]));
         transaction.setPatient(patient);
         transaction.setDoctor(doctor);
         transaction.setAppointment(appointment);
