@@ -77,7 +77,7 @@ public class DoctorService {
         return (ArrayList<Doctor>) doctorDao.findDoctorsBySpecialtyIdAndAppUserStatus(specialty_id, 1);
     }
 
-    public void update(int id, DoctorModel doctorModel) {
+    public Doctor update(int id, DoctorModel doctorModel) {
         AppUser appUser = appUserDao.findByDoctorId(id);
         appUser.setPassword(bCryptPasswordEncoder.encode(doctorModel.getPassword()));
         appUserDao.save(appUser);
@@ -115,6 +115,7 @@ public class DoctorService {
 
         appUser.setStatus(APP_USER_ACTIVE);
         appUserDao.save(appUser);
+        return doctorDao.findByAppUser(appUser);
     }
 
     private void clearSchedulesFromConsultingRoom(ConsultingRoom consultingRoom) {
@@ -206,12 +207,13 @@ public class DoctorService {
         }
     }
 
-    public void updateProfessionalProfile(int doctor_id, DoctorModel doctorModel) {
+    public Doctor updateProfessionalProfile(int doctor_id, DoctorModel doctorModel) {
         Doctor doctor = doctorDao.findById(doctor_id);
         doctor.setPhone_number(doctorModel.getPhone_number());
         doctor.setBio(doctorModel.getBio());
         doctor.setPricing(doctorModel.getPricing());
         doctorDao.save(doctor);
+        return doctor;
     }
 
     public void updateSchedule(int doctor_id, DoctorModel doctorModel){

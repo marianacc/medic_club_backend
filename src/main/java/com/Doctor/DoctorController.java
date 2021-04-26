@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 
 @RestController
@@ -50,7 +52,7 @@ public class DoctorController {
     public ObjectResponse updateDoctorInformation(@PathVariable("doctor_id") int doctor_id, @RequestBody DoctorModel doctorModel){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
-            doctorService.update(doctor_id, doctorModel);
+            objectResponse.setData(doctorService.update(doctor_id, doctorModel));
         }catch(Exception e){
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());
@@ -169,7 +171,7 @@ public class DoctorController {
     public ObjectResponse updateProfileByDoctorId(@PathVariable("doctor_id") int doctor_id, @RequestBody DoctorModel doctorModel){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
-            doctorService.updateProfessionalProfile(doctor_id, doctorModel);
+            objectResponse.setData(doctorService.updateProfessionalProfile(doctor_id, doctorModel));
         }catch(Exception e){
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());

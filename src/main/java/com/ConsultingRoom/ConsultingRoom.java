@@ -21,7 +21,7 @@ public class ConsultingRoom {
     @JsonIgnore
     private Set<Doctor> doctors;
 
-    @OneToMany(mappedBy="consultingRoom")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="consultingRoom")
     private Set<Schedule> schedules;
 
     // Constructores

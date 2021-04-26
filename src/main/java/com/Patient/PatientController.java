@@ -103,7 +103,7 @@ public class PatientController {
     public ObjectResponse updatePatientInformation(@PathVariable("patient_id") int patient_id, @RequestBody PatientModel patientModel){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
-            patientService.update(patient_id, patientModel);
+            objectResponse.setData(patientService.update(patient_id, patientModel));
         }catch(Exception e){
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());

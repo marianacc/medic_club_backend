@@ -27,7 +27,7 @@ public class Doctor {
     @JoinColumn(name = "app_user_id", referencedColumnName = "id")
     private AppUser appUser;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="consulting_room_id", nullable=true)
     private ConsultingRoom consultingRoom;
 

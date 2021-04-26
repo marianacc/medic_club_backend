@@ -54,6 +54,7 @@ public class AppointmentService {
         appointment.setDoctor(doctor);
         appointment.setPatient(patient);
         appointment.setStatus(APPOINTMENT_ON_HOLD);
+        appointment.setQualified(false);
         appointment.setScore(0);
         appointmentDao.save(appointment);
         // Guarda la transacción
@@ -100,6 +101,7 @@ public class AppointmentService {
                 appointmentModel.setId(appointment.getId());
                 appointmentModel.setStatus(appointment.getStatus());
                 appointmentModel.setScore(appointment.getScore());
+                appointmentModel.setQualified(appointment.isQualified());
                 appointmentModelList.add(appointmentModel);
             }
         }
@@ -162,6 +164,7 @@ public class AppointmentService {
     public String rateAppointment(int appointment_id, int score) {
         Appointment appointment = appointmentDao.findById(appointment_id);
         appointment.setScore(score);
+        appointment.setQualified(true);
         appointmentDao.save(appointment);
         getDoctorRating(appointment_id);
         return "Cita calificada con exito";

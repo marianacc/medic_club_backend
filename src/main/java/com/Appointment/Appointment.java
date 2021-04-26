@@ -1,12 +1,8 @@
 package com.Appointment;
 
-import com.ConsultingRoom.ConsultingRoom;
 import com.Doctor.Doctor;
 import com.IntervalTaken.IntervalTaken;
 import com.Patient.Patient;
-import com.Specialty.Specialty;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -18,6 +14,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private int score, status;
+    private boolean qualified;
 
     @ManyToOne
     @JoinColumn(name="doctor_id", nullable=true)
@@ -84,5 +81,13 @@ public class Appointment {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public boolean isQualified() {
+        return qualified;
+    }
+
+    public void setQualified(boolean qualified) {
+        this.qualified = qualified;
     }
 }

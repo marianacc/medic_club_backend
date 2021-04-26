@@ -16,6 +16,16 @@ public class AppointmentModel {
     private int doctor_id;
     private int patient_id;
 
+    private boolean qualified;
+
+    public boolean isQualified() {
+        return qualified;
+    }
+
+    public void setQualified(boolean qualified) {
+        this.qualified = qualified;
+    }
+
     private Set<IntervalTaken> intervalTakens;
 
     public Integer getId() {
