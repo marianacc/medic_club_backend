@@ -28,4 +28,8 @@ public interface TransactionDao extends JpaRepository<Transaction, Integer> {
             "AND a.month = ?2 " +
             "GROUP BY a.month")
     Double getTotalAmountByCategoryAndMonth(Integer id, int month);
+
+    @Query("SELECT sum(a.amount) " +
+            "FROM Transaction a")
+    double getTotalAmount();
 }

@@ -120,4 +120,23 @@ public class DashboardService {
         }
         return incomeByCategoryAndMonths;
     }
+
+    public ArrayList<MostImportantCategories> getMostImportantCategories() {
+        ArrayList<MostImportantCategories> mostImportantCategories = new ArrayList<>();
+        ArrayList<Specialty> specialties = (ArrayList<Specialty>) specialtyDao.findAll();
+
+        for (Specialty specialty: specialties
+             ) {
+            MostImportantCategories mostImportantCategory = new MostImportantCategories();
+            mostImportantCategory.setCategory(specialty.getName());
+            if (transactionDao.getTotalAmountByCategory(specialty.getId()) != null){
+                double totalCategory = transactionDao.getTotalAmountByCategory(specialty.getId());
+                mostImportantCategory.setAmount(totalCategory);
+                mostImportantCategory.setPercentage((totalCategory*100)/transactionDao.getTotalAmount());
+                mostImportantCategories.add(mostImportantCategory);
+            }
+        }
+
+        return mostImportantCategories;
+    }
 }

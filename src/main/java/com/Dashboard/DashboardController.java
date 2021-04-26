@@ -57,4 +57,20 @@ public class DashboardController {
         }
         return objectResponse;
     }
+
+    @RequestMapping(
+            value = "/most_important_categories",
+            method = RequestMethod.GET)
+    public ObjectResponse mostImportantCategories(){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            ArrayList<MostImportantCategories> mostImportantCategories = dashboardService.getMostImportantCategories();
+            objectResponse.setData(mostImportantCategories);
+            objectResponse.setSuccess(true);
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
 }
