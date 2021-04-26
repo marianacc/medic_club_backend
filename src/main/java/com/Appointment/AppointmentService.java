@@ -174,8 +174,8 @@ public class AppointmentService {
         Appointment appointment = appointmentDao.findById(appointment_id);
         int doctor_id = appointment.getDoctor().getId();
         Doctor doctor = doctorDao.findById(doctor_id);
-        doctor.setScore(appointmentDao.getRatingDoctor(doctor_id));
+        doctor.setScore(appointmentDao.getRatingDoctor(doctor_id, 3));
         doctorDao.save(doctor);
-        System.out.println("Doctor calificado correctamente\nNuevo score: " + appointmentDao.getRatingDoctor(doctor_id));
+        System.out.println("Doctor calificado correctamente\nNuevo score: " + appointmentDao.getRatingDoctor(doctor_id,3));
     }
 }

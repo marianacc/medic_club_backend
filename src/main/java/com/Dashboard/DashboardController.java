@@ -73,4 +73,20 @@ public class DashboardController {
         }
         return objectResponse;
     }
+
+    @RequestMapping(
+            value = "/most_important_doctors",
+            method = RequestMethod.GET)
+    public ObjectResponse mostImportantDoctors(){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            ArrayList<MostImportantDoctors> mostImportantDoctors = dashboardService.getMostImportantDoctors();
+            objectResponse.setData(mostImportantDoctors);
+            objectResponse.setSuccess(true);
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
 }

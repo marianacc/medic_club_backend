@@ -1,6 +1,8 @@
 package com.Dashboard;
 
 import com.ConsultingRoom.ConsultingRoomDao;
+import com.Doctor.Doctor;
+import com.Doctor.DoctorDao;
 import com.Specialty.Specialty;
 import com.Specialty.SpecialtyDao;
 import com.Transaction.Transaction;
@@ -16,11 +18,13 @@ public class DashboardService {
 
     TransactionDao transactionDao;
     SpecialtyDao specialtyDao;
+    DoctorDao doctorDao;
 
     @Autowired
-    public void DashboardService (TransactionDao transactionDao, SpecialtyDao specialtyDao){
+    public void DashboardService (TransactionDao transactionDao, SpecialtyDao specialtyDao, DoctorDao doctorDao){
         this.transactionDao = transactionDao;
         this.specialtyDao = specialtyDao;
+        this.doctorDao = doctorDao;
     }
 
     public ArrayList<IncomeByCategory> getIncomeByCategories() {
@@ -138,5 +142,25 @@ public class DashboardService {
         }
 
         return mostImportantCategories;
+    }
+
+    public ArrayList<MostImportantDoctors> getMostImportantDoctors() {
+        ArrayList<Doctor> doctors = doctorDao.findTop5ByAppUserStatusOrderByScoreDesc(1);
+        ArrayList<MostImportantDoctors> mostImportantDoctors = new ArrayList<>();
+
+        for (Doctor doctor: doctors
+             ) {
+            MostImportantDoctors mostImportantDoctor = new MostImportantDoctors();
+            mostImportantDoctor.setName(doctor.getAppUser().getFirst_name() + " " + doctor.getAppUser().getLast_name());
+            mostImportantDoctor.setCategory(doctor.getSpecialty().getName());
+            if(doctor.getScore() != null){
+                mostImportantDoctor.setScore(doctor.getScore());
+            }
+            mostImportantDoctor.setTotalPatients(doctor.getTotalPatientsAttended());
+            mostImportantDoctor.setPercentageAppointments((doctor.getTotalPatientsAttended() * 100) / doctorDao.getTotalAppointments(doctor.getId()));
+            System.out.println(doctorDao.getTotalAppointments(doctor.getId()));
+            mostImportantDoctors.add(mostImportantDoctor);
+        }
+        return mostImportantDoctors;
     }
 }
