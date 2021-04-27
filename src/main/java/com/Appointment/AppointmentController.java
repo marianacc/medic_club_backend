@@ -143,7 +143,7 @@ public class AppointmentController {
     @RequestMapping(
             value = "patient/rate_appointment",
             method = RequestMethod.PUT)
-    public ObjectResponse rateAppointment(@RequestParam(name = "appointment_id") int appointment_id, @RequestParam(name = "score") int score){
+    public ObjectResponse rateAppointment(@RequestParam(name = "appointment_id") int appointment_id, @RequestParam(name = "score") double score){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
             String message = appointmentService.rateAppointment(appointment_id, score);

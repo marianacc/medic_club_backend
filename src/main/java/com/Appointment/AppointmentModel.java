@@ -11,7 +11,8 @@ import java.util.Set;
 public class AppointmentModel {
 
     private Integer id;
-    private int score, status;
+    private int status;
+    private double score;
 
     private int doctor_id;
     private int patient_id;
@@ -36,11 +37,11 @@ public class AppointmentModel {
         this.id = id;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 

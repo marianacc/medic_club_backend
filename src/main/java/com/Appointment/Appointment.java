@@ -13,18 +13,19 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private int score, status;
+    private int status;
     private boolean qualified;
+    private double score;
 
     @ManyToOne
-    @JoinColumn(name="doctor_id", nullable=true)
+    @JoinColumn(name = "doctor_id", nullable = true)
     private Doctor doctor;
 
     @ManyToOne
-    @JoinColumn(name="patient_id", nullable=false)
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
-    @OneToMany(mappedBy="appointment")
+    @OneToMany(mappedBy = "appointment")
     private Set<IntervalTaken> intervalTakens;
 
 
@@ -51,11 +52,11 @@ public class Appointment {
         this.id = id;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 
