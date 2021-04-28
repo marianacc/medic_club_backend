@@ -167,7 +167,8 @@ public class AppointmentService {
         appointment.setQualified(true);
         appointmentDao.save(appointment);
         getDoctorRating(appointment_id);
-        return "Cita calificada con exito";
+        System.out.println(appointment_id);
+        return "Cita calificada con exito.";
     }
 
     private void getDoctorRating(int appointment_id) {
