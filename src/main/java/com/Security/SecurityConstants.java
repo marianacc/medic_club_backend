@@ -10,4 +10,5 @@ public class SecurityConstants {
     public static final String MULTIPLE_PATIENTS_CREATION = "/patients/loadPatientsFromJson";
     public static final String SWAGGER_API_DOCUMENTATION = "/v2/api-docs";
     public static final String SWAGGER_API_UI = "/swagger-ui.html";
+    public static final String LOGIN_WITH_GOOGLE = "/app-user/continue_with_google";
 }

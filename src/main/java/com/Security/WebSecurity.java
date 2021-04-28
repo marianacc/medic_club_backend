@@ -35,6 +35,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, SWAGGER_API_DOCUMENTATION).permitAll()
                 .antMatchers(HttpMethod.POST, MULTIPLE_PATIENTS_CREATION).permitAll()
                 .antMatchers(HttpMethod.GET, SWAGGER_API_UI).permitAll()
+                .antMatchers(HttpMethod.POST, LOGIN_WITH_GOOGLE).permitAll()
                 .antMatchers(
                         "/v2/api-docs",
                         "/swagger-resources/**",
