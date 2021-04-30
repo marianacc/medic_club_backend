@@ -193,4 +193,19 @@ public class DoctorController {
         }
         return objectResponse;
     }
+
+    @RequestMapping(
+            value = "filter/score",
+            method = RequestMethod.GET)
+    public ObjectResponse filterByScoreAndSpecialty(@RequestParam(name = "specialty_id") int specialty_id){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            objectResponse.setData(doctorService.orderListByScoreAndSpecialty(specialty_id));
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
+
 }

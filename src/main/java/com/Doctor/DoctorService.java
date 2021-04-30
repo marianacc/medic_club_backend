@@ -242,4 +242,8 @@ public class DoctorService {
         consultingRoom.setSchedules(schedulesConsultingRoom);
         consultingRoomDao.save(consultingRoom);
     }
+
+    public ArrayList<Doctor> orderListByScoreAndSpecialty(int specialty_id) {
+        return (ArrayList<Doctor>) doctorDao.findAllBySpecialtyIdOrderByScoreDesc(specialty_id);
+    }
 }
