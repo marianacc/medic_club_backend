@@ -243,7 +243,29 @@ public class DoctorService {
         consultingRoomDao.save(consultingRoom);
     }
 
-    public ArrayList<Doctor> orderListByScoreAndSpecialty(int specialty_id) {
-        return (ArrayList<Doctor>) doctorDao.findAllBySpecialtyIdOrderByScoreDesc(specialty_id);
+    public ArrayList<Doctor> filterList(int specialty_id, FilterModel filterModel) {
+        ArrayList<Doctor> filteredDoctorsList = new ArrayList<>();
+        if (filterModel.orderBy == 1){
+            filteredDoctorsList = orderListByScore(specialty_id);
+        } else if (filterModel.orderBy == 2){
+            filteredDoctorsList = orderListByMaxPrice(specialty_id);
+        } else if (filterModel.orderBy == 3){
+            filteredDoctorsList = orderListByMinPrice(specialty_id);
+        }
+
+        return filteredDoctorsList;
     }
+
+    public ArrayList<Doctor> orderListByScore(int specialty_id) {
+        return (ArrayList<Doctor>) doctorDao.findAllByAppUserStatusAndSpecialtyIdOrderByScoreDesc(1, specialty_id);
+    }
+
+    private ArrayList<Doctor> orderListByMaxPrice(int specialty_id) {
+        return (ArrayList<Doctor>) doctorDao.findAllByAppUserStatusAndSpecialtyIdOrderByPricingDesc(1, specialty_id);
+    }
+
+    private ArrayList<Doctor> orderListByMinPrice(int specialty_id) {
+        return (ArrayList<Doctor>) doctorDao.findAllByAppUserStatusAndSpecialtyIdOrderByPricingAsc(1, specialty_id);
+    }
+
 }

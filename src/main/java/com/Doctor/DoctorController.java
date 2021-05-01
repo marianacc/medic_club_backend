@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.print.Doc;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.logging.Filter;
 
 @RestController
 @RequestMapping(value = "doctors")
@@ -195,12 +196,14 @@ public class DoctorController {
     }
 
     @RequestMapping(
-            value = "filter/score",
-            method = RequestMethod.GET)
-    public ObjectResponse filterByScoreAndSpecialty(@RequestParam(name = "specialty_id") int specialty_id){
+            value = "filter",
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ObjectResponse filterList(@RequestParam(name = "specialty_id") int specialty_id, @RequestBody FilterModel filterModel){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
-            objectResponse.setData(doctorService.orderListByScoreAndSpecialty(specialty_id));
+            objectResponse.setData(doctorService.filterList(specialty_id, filterModel));
         }catch(Exception e){
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());

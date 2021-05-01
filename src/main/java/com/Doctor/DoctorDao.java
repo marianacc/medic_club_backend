@@ -13,8 +13,9 @@ public interface DoctorDao extends JpaRepository<Doctor, Integer> {
     Doctor findById(int id);
     Doctor findByAppUser(AppUser appUser);
     ArrayList<Doctor> findTop5ByAppUserStatusOrderByScoreDesc(int status);
-
-    ArrayList<Doctor> findAllBySpecialtyIdOrderByScoreDesc(int id);
+    ArrayList<Doctor> findAllByAppUserStatusAndSpecialtyIdOrderByScoreDesc(int status, int id);
+    ArrayList<Doctor> findAllByAppUserStatusAndSpecialtyIdOrderByPricingDesc(int i, int specialty_id);
+    ArrayList<Doctor> findAllByAppUserStatusAndSpecialtyIdOrderByPricingAsc(int i, int specialty_id);
 
     @Query("SELECT count(a.id) FROM Appointment a, Doctor b WHERE a.doctor.id = b.id AND b.id = ?1")
     Double getTotalAppointments(int id);
