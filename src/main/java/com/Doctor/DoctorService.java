@@ -253,6 +253,10 @@ public class DoctorService {
             filteredDoctorsList = orderListByMinPrice(specialty_id);
         }
 
+        if (filterModel.min > 0){
+            filteredDoctorsList = orderByRangePrice(filteredDoctorsList, filterModel);
+        }
+
         return filteredDoctorsList;
     }
 
@@ -268,4 +272,14 @@ public class DoctorService {
         return (ArrayList<Doctor>) doctorDao.findAllByAppUserStatusAndSpecialtyIdOrderByPricingAsc(1, specialty_id);
     }
 
+    public ArrayList<Doctor> orderByRangePrice(ArrayList<Doctor> doctors, FilterModel filterModel){
+        ArrayList<Doctor> newDoctors = new ArrayList<>();
+        for (Doctor doctor : doctors
+        ) {
+            if (filterModel.min <= doctor.getPricing() && doctor.getPricing() <= filterModel.max){
+                newDoctors.add(doctor);
+            }
+        }
+        return newDoctors;
+    }
 }
