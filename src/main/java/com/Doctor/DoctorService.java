@@ -7,6 +7,7 @@ import com.ConsultingRoom.ConsultingRoomDao;
 import com.Interval.ScheduleInterval;
 import com.Interval.ScheduleIntervalDao;
 import com.Interval.ScheduleIntervalService;
+import com.Schedule.Day;
 import com.Schedule.Schedule;
 import com.Schedule.ScheduleDao;
 import com.Specialty.SpecialtyDao;
@@ -257,6 +258,11 @@ public class DoctorService {
             filteredDoctorsList = orderByRangePrice(filteredDoctorsList, filterModel);
         }
 
+        if (filterModel.days != null){
+            filteredDoctorsList = orderByDay(filteredDoctorsList, filterModel);
+        }
+
+
         return filteredDoctorsList;
     }
 
@@ -281,5 +287,25 @@ public class DoctorService {
             }
         }
         return newDoctors;
+    }
+
+    public ArrayList<Doctor> orderByDay(ArrayList<Doctor> doctors, FilterModel filterModel){
+        ArrayList<Doctor> doctorArrayList =  new ArrayList<>();
+        for (Doctor doctor : doctors
+             ) {
+            Set<Schedule> schedules = doctor.getConsultingRoom().getSchedules();
+            for (Schedule schedule: schedules
+                 ) {
+                String[] days = filterModel.getDays();
+                for (String day : days) {
+                    if (schedule.getDay().equals(day)) {
+                        if (!doctorArrayList.contains(doctor)){
+                            doctorArrayList.add(doctor);
+                        }
+                    }
+                }
+            }
+        }
+        return doctorArrayList;
     }
 }
