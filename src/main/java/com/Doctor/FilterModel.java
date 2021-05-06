@@ -6,8 +6,7 @@ import org.hibernate.criterion.Order;
 public class FilterModel {
 
     int orderBy;
-    double max;
-    double min;
+    double[] price;
     String[] days;
 
     public int getOrderBy() {
@@ -18,20 +17,12 @@ public class FilterModel {
         this.orderBy = orderBy;
     }
 
-    public double getMax() {
-        return max;
+    public double[] getPrice() {
+        return price;
     }
 
-    public void setMax(double max) {
-        this.max = max;
-    }
-
-    public double getMin() {
-        return min;
-    }
-
-    public void setMin(double min) {
-        this.min = min;
+    public void setPrice(double[] price) {
+        this.price = price;
     }
 
     public String[] getDays() {

@@ -246,22 +246,20 @@ public class DoctorService {
 
     public ArrayList<Doctor> filterList(int specialty_id, FilterModel filterModel) {
         ArrayList<Doctor> filteredDoctorsList = new ArrayList<>();
-        if (filterModel.orderBy == 1){
-            filteredDoctorsList = orderListByScore(specialty_id);
-        } else if (filterModel.orderBy == 2){
-            filteredDoctorsList = orderListByMaxPrice(specialty_id);
-        } else if (filterModel.orderBy == 3){
-            filteredDoctorsList = orderListByMinPrice(specialty_id);
+
+        if (filterModel.orderBy > 0){
+            filteredDoctorsList = orderList(specialty_id, filterModel);
+        } else {
+            filteredDoctorsList = doctorDao.findDoctorsBySpecialtyIdAndAppUserStatus(specialty_id, 1);
         }
 
-        if (filterModel.min > 0){
+        if (filterModel.price != null){
             filteredDoctorsList = orderByRangePrice(filteredDoctorsList, filterModel);
         }
 
         if (filterModel.days != null){
             filteredDoctorsList = orderByDay(filteredDoctorsList, filterModel);
         }
-
 
         return filteredDoctorsList;
     }
@@ -278,11 +276,23 @@ public class DoctorService {
         return (ArrayList<Doctor>) doctorDao.findAllByAppUserStatusAndSpecialtyIdOrderByPricingAsc(1, specialty_id);
     }
 
+    public ArrayList<Doctor> orderList(int specialty_id, FilterModel filterModel){
+        ArrayList<Doctor> filteredDoctorsList = new ArrayList<>();
+        if (filterModel.orderBy == ORDER_BY_SCORE){
+            filteredDoctorsList = orderListByScore(specialty_id);
+        } else if (filterModel.orderBy == ORDER_BY_BEST_PRICE){
+            filteredDoctorsList = orderListByMaxPrice(specialty_id);
+        } else if (filterModel.orderBy == ORDER_BY_LOWEST_PRICE){
+            filteredDoctorsList = orderListByMinPrice(specialty_id);
+        }
+        return filteredDoctorsList;
+    }
+
     public ArrayList<Doctor> orderByRangePrice(ArrayList<Doctor> doctors, FilterModel filterModel){
         ArrayList<Doctor> newDoctors = new ArrayList<>();
         for (Doctor doctor : doctors
         ) {
-            if (filterModel.min <= doctor.getPricing() && doctor.getPricing() <= filterModel.max){
+            if (filterModel.price[0] <= doctor.getPricing() && doctor.getPricing() <= filterModel.price[1]){
                 newDoctors.add(doctor);
             }
         }
