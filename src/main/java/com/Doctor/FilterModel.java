@@ -8,7 +8,7 @@ public class FilterModel {
     int orderBy;
     double max;
     double min;
-    Day day;
+    String[] days;
 
     public int getOrderBy() {
         return orderBy;
@@ -34,12 +34,12 @@ public class FilterModel {
         this.min = min;
     }
 
-    public Day getDay() {
-        return day;
+    public String[] getDays() {
+        return days;
     }
 
-    public void setDay(Day day) {
-        this.day = day;
+    public void setDays(String[] days) {
+        this.days = days;
     }
 }
 

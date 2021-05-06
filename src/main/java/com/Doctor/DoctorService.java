@@ -7,6 +7,7 @@ import com.ConsultingRoom.ConsultingRoomDao;
 import com.Interval.ScheduleInterval;
 import com.Interval.ScheduleIntervalDao;
 import com.Interval.ScheduleIntervalService;
+import com.Schedule.Day;
 import com.Schedule.Schedule;
 import com.Schedule.ScheduleDao;
 import com.Specialty.SpecialtyDao;
@@ -253,6 +254,15 @@ public class DoctorService {
             filteredDoctorsList = orderListByMinPrice(specialty_id);
         }
 
+        if (filterModel.min > 0){
+            filteredDoctorsList = orderByRangePrice(filteredDoctorsList, filterModel);
+        }
+
+        if (filterModel.days != null){
+            filteredDoctorsList = orderByDay(filteredDoctorsList, filterModel);
+        }
+
+
         return filteredDoctorsList;
     }
 
@@ -266,5 +276,36 @@ public class DoctorService {
 
     private ArrayList<Doctor> orderListByMinPrice(int specialty_id) {
         return (ArrayList<Doctor>) doctorDao.findAllByAppUserStatusAndSpecialtyIdOrderByPricingAsc(1, specialty_id);
+    }
+
+    public ArrayList<Doctor> orderByRangePrice(ArrayList<Doctor> doctors, FilterModel filterModel){
+        ArrayList<Doctor> newDoctors = new ArrayList<>();
+        for (Doctor doctor : doctors
+        ) {
+            if (filterModel.min <= doctor.getPricing() && doctor.getPricing() <= filterModel.max){
+                newDoctors.add(doctor);
+            }
+        }
+        return newDoctors;
+    }
+
+    public ArrayList<Doctor> orderByDay(ArrayList<Doctor> doctors, FilterModel filterModel){
+        ArrayList<Doctor> doctorArrayList =  new ArrayList<>();
+        for (Doctor doctor : doctors
+             ) {
+            Set<Schedule> schedules = doctor.getConsultingRoom().getSchedules();
+            for (Schedule schedule: schedules
+                 ) {
+                String[] days = filterModel.getDays();
+                for (String day : days) {
+                    if (schedule.getDay().equals(day)) {
+                        if (!doctorArrayList.contains(doctor)){
+                            doctorArrayList.add(doctor);
+                        }
+                    }
+                }
+            }
+        }
+        return doctorArrayList;
     }
 }
