@@ -267,5 +267,4 @@ public class DoctorService {
     private ArrayList<Doctor> orderListByMinPrice(int specialty_id) {
         return (ArrayList<Doctor>) doctorDao.findAllByAppUserStatusAndSpecialtyIdOrderByPricingAsc(1, specialty_id);
     }
-
 }
