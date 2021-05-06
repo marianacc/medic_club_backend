@@ -190,7 +190,7 @@ public class DoctorController {
             doctorService.updateSchedule(doctor_id, doctorModel);
         }catch(Exception e){
             objectResponse.setSuccess(false);
-            objectResponse.setStatusMessage(e.getMessage());
+            objectResponse.setStatusMessage("El doctor tiene citas pendientes y no puede cambiar su horario");
         }
         return objectResponse;
     }
@@ -210,5 +210,4 @@ public class DoctorController {
         }
         return objectResponse;
     }
-
 }
