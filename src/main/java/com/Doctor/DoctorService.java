@@ -54,6 +54,7 @@ public class DoctorService {
             appUser.setLast_name(doctorModel.getLast_name());
             appUser.setStatus(APP_USER_CREATED);
             appUser.setRole(DOCTOR);
+            appUser.setGenre(doctorModel.getGenre());
             Doctor doctor = new Doctor();
             doctor.setSpecialty(specialtyDao.findById(doctorModel.getId_specialty()));
             doctor.setScore(doctorModel.getScore());
