@@ -7,6 +7,8 @@ import com.Jwt.JwtDao;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,12 +17,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -74,5 +78,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Jwt newToken= new Jwt();
         newToken.setToken(token);
         res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
+
+        res.setContentType("application/json");
+        res.setCharacterEncoding("utf-8");
+        JsonObject json = new JsonObject();
+        json.addProperty("JWT", token);
+        PrintWriter out = res.getWriter();
+        out.print(json.toString());
+
     }
 }
