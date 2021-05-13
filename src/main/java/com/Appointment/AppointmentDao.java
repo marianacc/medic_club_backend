@@ -12,4 +12,17 @@ public interface AppointmentDao extends JpaRepository<Appointment, Integer> {
     Appointment findById(int id);
     @Query("SELECT avg(a.score) FROM Appointment a WHERE a.doctor.id = ?1 AND a.status = ?2")
     double getRatingDoctor(int doctor_id, int status);
+
+    @Query("SELECT au.genre, count( DISTINCT  au.id) " +
+            "FROM AppUser au, Patient p, Appointment ap " +
+            "WHERE au.id = p.appUser.id " +
+            "AND p.id = ap.patient.id " +
+            "GROUP BY au.genre")
+    ArrayList<String> countPerGenre();
+
+    @Query("SELECT count( DISTINCT  au.id) " +
+            "FROM AppUser au, Patient p, Appointment ap " +
+            "WHERE au.id = p.appUser.id " +
+            "AND p.id = ap.patient.id ")
+    int countAll();
 }
