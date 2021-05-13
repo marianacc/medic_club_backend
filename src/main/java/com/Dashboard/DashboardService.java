@@ -1,8 +1,12 @@
 package com.Dashboard;
 
+import com.AppUser.AppUserDao;
+import com.Appointment.AppointmentDao;
 import com.ConsultingRoom.ConsultingRoomDao;
 import com.Doctor.Doctor;
 import com.Doctor.DoctorDao;
+import com.Patient.Patient;
+import com.Patient.PatientDao;
 import com.Specialty.Specialty;
 import com.Specialty.SpecialtyDao;
 import com.Transaction.Transaction;
@@ -12,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DashboardService {
@@ -19,12 +24,16 @@ public class DashboardService {
     TransactionDao transactionDao;
     SpecialtyDao specialtyDao;
     DoctorDao doctorDao;
+    AppointmentDao appointmentDao;
+    PatientDao patientDao;
 
     @Autowired
-    public void DashboardService (TransactionDao transactionDao, SpecialtyDao specialtyDao, DoctorDao doctorDao){
+    public void DashboardService (TransactionDao transactionDao, SpecialtyDao specialtyDao, DoctorDao doctorDao, AppointmentDao appointmentDao, PatientDao patientDao){
         this.transactionDao = transactionDao;
         this.specialtyDao = specialtyDao;
         this.doctorDao = doctorDao;
+        this.appointmentDao = appointmentDao;
+        this.patientDao = patientDao;
     }
 
     public ArrayList<IncomeByCategory> getIncomeByCategories() {
@@ -162,5 +171,35 @@ public class DashboardService {
             mostImportantDoctors.add(mostImportantDoctor);
         }
         return mostImportantDoctors;
+    }
+
+    public ArrayList<AttendanceByGender> getAttendanceByGender() {
+        ArrayList<String> countPerGenre = appointmentDao.countPerGenre();
+        ArrayList<AttendanceByGender> attendanceByGenders = new ArrayList<>();
+        int total = appointmentDao.countAll();
+        for (int i = 0; i<countPerGenre.size(); i++){
+            String [] parts = countPerGenre.get(i).split(",");
+            String part1 = parts[0];
+            int part2 = Integer.parseInt(parts[1]);
+            AttendanceByGender attendanceByGender = new AttendanceByGender();
+            attendanceByGender.setGender(part1);
+            attendanceByGender.setPercentage((part2*100)/total);
+            attendanceByGenders.add(attendanceByGender);
+        }
+
+        return attendanceByGenders;
+    }
+
+    public ArrayList<TopMostAttendedPatients> getMostAttendedPatients() {
+        ArrayList<Patient> patients = patientDao.findTop5ByAppUserStatusOrderByTotalAppointmentsCreatedDesc(1);
+        ArrayList<TopMostAttendedPatients> mostAttendedPatients = new ArrayList<>();
+        for (Patient patient : patients
+             ) {
+            TopMostAttendedPatients topMostAttendedPatients = new TopMostAttendedPatients();
+            topMostAttendedPatients.setName(patient.getAppUser().getFirst_name() + " " + patient.getAppUser().getLast_name());
+            topMostAttendedPatients.setTotalAppointmentsCreated(patient.getTotalAppointmentsCreated());
+            mostAttendedPatients.add(topMostAttendedPatients);
+        }
+        return mostAttendedPatients;
     }
 }

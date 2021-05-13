@@ -17,6 +17,7 @@ public class Patient {
     private Integer id;
     private String weight;
     private String height;
+    private int totalAppointmentsCreated;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "app_user_id", referencedColumnName = "id")
@@ -32,6 +33,14 @@ public class Patient {
 
     // Constructores
     public Patient() {
+    }
+
+    public int getTotalAppointmentsCreated() {
+        return totalAppointmentsCreated;
+    }
+
+    public void setTotalAppointmentsCreated(int totalAppointmentsCreated) {
+        this.totalAppointmentsCreated = totalAppointmentsCreated;
     }
 
     public Set<Appointment> getAppointments() {
