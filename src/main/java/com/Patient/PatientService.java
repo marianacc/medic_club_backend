@@ -37,6 +37,7 @@ public class PatientService {
             appUserDao.save(appUser);
             Patient patient = new Patient();
             patient.setAppUser(appUser);
+            patient.setTotalAppointmentsCreated(0);
             patientDao.save(patient);
             return true;
         } else {

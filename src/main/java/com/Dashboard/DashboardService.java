@@ -5,6 +5,8 @@ import com.Appointment.AppointmentDao;
 import com.ConsultingRoom.ConsultingRoomDao;
 import com.Doctor.Doctor;
 import com.Doctor.DoctorDao;
+import com.Patient.Patient;
+import com.Patient.PatientDao;
 import com.Specialty.Specialty;
 import com.Specialty.SpecialtyDao;
 import com.Transaction.Transaction;
@@ -23,13 +25,15 @@ public class DashboardService {
     SpecialtyDao specialtyDao;
     DoctorDao doctorDao;
     AppointmentDao appointmentDao;
+    PatientDao patientDao;
 
     @Autowired
-    public void DashboardService (TransactionDao transactionDao, SpecialtyDao specialtyDao, DoctorDao doctorDao, AppointmentDao appointmentDao){
+    public void DashboardService (TransactionDao transactionDao, SpecialtyDao specialtyDao, DoctorDao doctorDao, AppointmentDao appointmentDao, PatientDao patientDao){
         this.transactionDao = transactionDao;
         this.specialtyDao = specialtyDao;
         this.doctorDao = doctorDao;
         this.appointmentDao = appointmentDao;
+        this.patientDao = patientDao;
     }
 
     public ArrayList<IncomeByCategory> getIncomeByCategories() {
@@ -184,5 +188,18 @@ public class DashboardService {
         }
 
         return attendanceByGenders;
+    }
+
+    public ArrayList<TopMostAttendedPatients> getMostAttendedPatients() {
+        ArrayList<Patient> patients = patientDao.findTop5ByAppUserStatusOrderByTotalAppointmentsCreatedDesc(1);
+        ArrayList<TopMostAttendedPatients> mostAttendedPatients = new ArrayList<>();
+        for (Patient patient : patients
+             ) {
+            TopMostAttendedPatients topMostAttendedPatients = new TopMostAttendedPatients();
+            topMostAttendedPatients.setName(patient.getAppUser().getFirst_name() + " " + patient.getAppUser().getLast_name());
+            topMostAttendedPatients.setTotalAppointmentsCreated(patient.getTotalAppointmentsCreated());
+            mostAttendedPatients.add(topMostAttendedPatients);
+        }
+        return mostAttendedPatients;
     }
 }

@@ -75,7 +75,7 @@ public class AppointmentService {
         intervalTaken.setAppointment(appointment);
         intervalTaken.setInterval(scheduleInterval);
         intervalTaken.setDate(transactionModel.getDate());
-        intervalTakenDao.save(intervalTaken);
+        patient.setTotalAppointmentsCreated(patient.getTotalAppointmentsCreated() + 1);
         return true;
     }
 

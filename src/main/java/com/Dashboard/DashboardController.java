@@ -105,4 +105,20 @@ public class DashboardController {
         }
         return objectResponse;
     }
+
+    @RequestMapping(
+            value = "/top_most_attended_patients",
+            method = RequestMethod.GET)
+    public ObjectResponse mostAttendedPatients(){
+        ObjectResponse objectResponse = new ObjectResponse();
+        try{
+            ArrayList<TopMostAttendedPatients> mostAttendedPatients = dashboardService.getMostAttendedPatients();
+            objectResponse.setData(mostAttendedPatients);
+            objectResponse.setSuccess(true);
+        }catch(Exception e){
+            objectResponse.setSuccess(false);
+            objectResponse.setStatusMessage(e.getMessage());
+        }
+        return objectResponse;
+    }
 }
