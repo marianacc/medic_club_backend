@@ -47,13 +47,13 @@ public class DoctorController {
     }
 
     @RequestMapping(
-            value = "update/{doctor_id}",
+            value = "update/{app_user_id}",
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ObjectResponse updateDoctorInformation(@PathVariable("doctor_id") int doctor_id, @RequestBody DoctorModel doctorModel){
+    public ObjectResponse updateDoctorInformation(@PathVariable("app_user_id") int app_user_id, @RequestBody DoctorModel doctorModel){
         ObjectResponse objectResponse = new ObjectResponse();
         try{
-            objectResponse.setData(doctorService.update(doctor_id, doctorModel));
+            objectResponse.setData(doctorService.update(app_user_id, doctorModel));
         }catch(Exception e){
             objectResponse.setSuccess(false);
             objectResponse.setStatusMessage(e.getMessage());
