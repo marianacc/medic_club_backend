@@ -13,7 +13,7 @@ import javax.print.Doc;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.logging.Filter;
-
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping(value = "doctors")
 public class DoctorController {
