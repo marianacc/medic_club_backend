@@ -145,7 +145,7 @@ public class DashboardService {
             if (transactionDao.getTotalAmountByCategory(specialty.getId()) != null){
                 double totalCategory = transactionDao.getTotalAmountByCategory(specialty.getId());
                 mostImportantCategory.setAmount(totalCategory);
-                mostImportantCategory.setPercentage((totalCategory*100)/transactionDao.getTotalAmount());
+                mostImportantCategory.setPercentage(Math.round((totalCategory*100)/transactionDao.getTotalAmount()));
                 mostImportantCategories.add(mostImportantCategory);
             }
         }
