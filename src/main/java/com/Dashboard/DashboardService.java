@@ -91,7 +91,7 @@ public class DashboardService {
 
                 if (i == 6){
                     incomeByMonth.setMonth("Junio");
-                    //incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
+                    incomeByMonth.setAmount(transactionDao.getTotalAmountByCategoryAndMonth(specialty.getId(), i));
                 }
 
                 if (i == 7){
