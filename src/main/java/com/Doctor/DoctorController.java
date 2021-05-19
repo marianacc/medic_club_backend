@@ -197,7 +197,7 @@ public class DoctorController {
 
     @RequestMapping(
             value = "filter",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ObjectResponse filterList(@RequestParam(name = "specialty_id") int specialty_id, @RequestBody FilterModel filterModel){
