@@ -80,10 +80,10 @@ public class DoctorService {
     }
 
     public Doctor update(int id, DoctorModel doctorModel) {
-        AppUser appUser = appUserDao.findByDoctorId(id);
+        AppUser appUser = appUserDao.findById(id);
         appUser.setPassword(bCryptPasswordEncoder.encode(doctorModel.getPassword()));
         appUserDao.save(appUser);
-        Doctor doctor = doctorDao.findById(id);
+        Doctor doctor = doctorDao.findByAppUser(appUser);
         doctor.setPhone_number(doctorModel.getPhone_number());
         doctor.setPricing(doctorModel.getPricing());
         doctor.setBio(doctorModel.getBio());
