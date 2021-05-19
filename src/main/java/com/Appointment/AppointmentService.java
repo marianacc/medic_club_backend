@@ -75,6 +75,7 @@ public class AppointmentService {
         intervalTaken.setAppointment(appointment);
         intervalTaken.setInterval(scheduleInterval);
         intervalTaken.setDate(transactionModel.getDate());
+        intervalTakenDao.save(intervalTaken);
         patient.setTotalAppointmentsCreated(patient.getTotalAppointmentsCreated() + 1);
         return true;
     }
@@ -142,8 +143,8 @@ public class AppointmentService {
         Doctor doctor = doctorDao.findById(doctor_id);
         doctor.setTotalPatientsAttended(doctor.getTotalPatientsAttended()+1);
         doctorDao.save(doctor);
-        IntervalTaken intervalTaken = intervalTakenDao.findByAppointmentId(appointment.getId());
-        intervalTakenDao.delete(intervalTaken);
+        //IntervalTaken intervalTaken = intervalTakenDao.findByAppointmentId(appointment.getId());
+        //intervalTakenDao.delete(intervalTaken);
         return "Cita finalizada";
     }
 
