@@ -166,7 +166,7 @@ public class DashboardService {
                 mostImportantDoctor.setScore(doctor.getScore());
             }
             mostImportantDoctor.setTotalPatients(doctor.getTotalPatientsAttended());
-            mostImportantDoctor.setPercentageAppointments((doctor.getTotalPatientsAttended() * 100) / doctorDao.getTotalAppointments(doctor.getId()));
+            mostImportantDoctor.setPercentageAppointments(Math.round((doctor.getTotalPatientsAttended() * 100) / doctorDao.getTotalAppointments(doctor.getId())));
             System.out.println(doctorDao.getTotalAppointments(doctor.getId()));
             mostImportantDoctors.add(mostImportantDoctor);
         }
